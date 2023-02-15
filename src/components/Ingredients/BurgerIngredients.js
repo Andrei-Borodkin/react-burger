@@ -54,7 +54,7 @@ class BurgerIngredients extends React.Component {
         </section>
 
         <div>
-            <IngrModal show={this.state.isShow} close={this.closeModal} data = {this.props.data} />
+            <IngrModal show={this.state.isShow} close={this.closeModal} />
         </div>
       </main>
     );
