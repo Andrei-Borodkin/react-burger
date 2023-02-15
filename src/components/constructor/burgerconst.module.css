@@ -1,0 +1,71 @@
+.main {
+    position: absolute;
+    width: 600px;
+    height: 912px;
+    left: 1020px;
+    top: 128px;
+}
+
+.section {
+    padding: 0px;
+    position: absolute;
+    height: 656px;
+    left: 16px;
+    top: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.section::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+.section::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+ 
+.section::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 40px;
+    position: absolute;
+    width: 568px;
+    height: 64px;
+    left: 16px;
+    top: 796px;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    height: 64px;
+}
+
+.p {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 36px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+}
+
+.ico {
+    width: 36px;
+    height: 36px;
+    display: contents;
+}

@@ -1,0 +1,87 @@
+.main {
+    position: absolute;
+    width: 600px;
+    height: 912px;
+    left: 380px;
+    top: 128px;
+}
+.title {
+    position: absolute;
+    width: 600px;
+    height: 40px;
+    left: 0px;
+    top: 40px;
+}
+.span {
+    position: absolute;
+    width: 600px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+}
+.tab {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    position: absolute;
+    width: 600px;
+    height: 56px;
+    left: 0px;
+    top: 100px;
+}
+
+
+.section {
+    position: absolute;
+    width: 600px;
+    height: 756px;
+    left: 0px;
+    top: 156px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 0px;
+}
+
+.section::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+.section::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+ 
+.section::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+
+.headline {
+    background: #131316;
+    margin-top: 48px;
+    margin-bottom: 24px;
+}
+
+.headlineSpan {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.puns {
+    display: flex;
+    left: 0px;
+    top: 94px;
+    flex-wrap: wrap;
+    cursor: pointer;
+}

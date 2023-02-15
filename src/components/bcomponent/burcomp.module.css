@@ -1,0 +1,60 @@
+.component {
+    width: 568px;
+    height: 80px;
+    position: relative;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.ingridient {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    height: 80px;
+    left: 32px;
+    right: 0px;
+    top: calc(50% - 80px/2);
+    background: #1C1C21;
+    border-radius: 88px 88px 40px 40px;
+}
+
+
+.img {
+    width: 80px;
+    height: 40px;
+}
+
+.name {
+    width: 254px;
+    height: 48px;
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 62px;
+    height: 24px;
+}
+
+.svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    top: calc(50% - 24px/2);
+}
+
