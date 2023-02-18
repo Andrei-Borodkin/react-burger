@@ -33,6 +33,7 @@
     left: 1073px;
     top: 0px;
     background: #1C1C21;
+    cursor: pointer;
 }
 
 .ico {
@@ -84,6 +85,7 @@
     flex: none;
     order: 0;
     flex-grow: 0;
+    cursor: pointer;
 }
 .inactive {
     display: flex;
@@ -98,5 +100,6 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+    cursor: pointer;
  }
 

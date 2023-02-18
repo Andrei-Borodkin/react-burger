@@ -1,21 +1,19 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import moduleStyles from './modal.module.css';
-import './Modal.css';
 import { CloseIcon, CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 
-const modal = (props) => {
-    return (
-        <div className= {props.show ? "modal-bg" : ""}>
-            <div className={moduleStyles.wrapper}
-                style={{
-                    transform: props.show ? 'translateY(0vh)' : 'translateY(-100vh)',
-                    opacity: props.show ? '1' : '0'
-                }}>
-                
+const modalDiv = document.getElementById("modals")
+
+const modal = ({close}) => {
+    return ReactDOM.createPortal (
+        <div className= {moduleStyles.modal} id="modalConst">
+            <div className={moduleStyles.wrapper}>
                 <div className={moduleStyles.card}>
 
                     <div className={moduleStyles.header}>
-                        <span onClick={props.close}> <CloseIcon type="primary" /></span>
+                        <span onClick={close}> <CloseIcon type="primary" /></span>
                     </div>
 
                     <h1 className={moduleStyles.number}>
@@ -43,13 +41,13 @@ const modal = (props) => {
 
                 </div>
             </div>
-        </div>
+        </div>,
+        modalDiv
     )
 }
 
-export default modal;
+export default React.memo(modal);
 
 modal.propTypes = {
-    show: PropTypes.bool,
-    close: PropTypes.func
-}; 
+    close: PropTypes.func.isRequired
+};

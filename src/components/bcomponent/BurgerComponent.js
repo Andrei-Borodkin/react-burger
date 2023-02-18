@@ -1,13 +1,15 @@
+import React from 'react'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burCompStyles from './burcomp.module.css';
 import PropTypes from 'prop-types';
+import { ingredientsPropType } from '../../utils/prop-types';
 
-const BurgerComponent = (props) => {
-
-    const col = props.data.length - 1
+const BurgerComponent = ({data}) => {
+    
+    const col = data.length - 1
     return (
         <>
-        {props.data.map((val, index)=>(
+        {data.map((val, index)=>(
             <div className={burCompStyles.component} key={index}>
                 <div className={burCompStyles.svg}>
                     <DragIcon type="primary" />
@@ -15,7 +17,7 @@ const BurgerComponent = (props) => {
                 
                 <ConstructorElement
                     type={ col === index ? "bottom" : index === 0 ? "top" : ""}
-                    isLocked={true}
+                    isLocked={ col === index || index === 0 ? true : false}
                     text={val.name}
                     price={val.price}
                     thumbnail={val.image}
@@ -27,9 +29,8 @@ const BurgerComponent = (props) => {
       )
   }
 
-  export default BurgerComponent
+  export default React.memo(BurgerComponent)
 
   BurgerComponent.propTypes = {
-    data: PropTypes.array
-  }; 
-  
+    data: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired
+  };

@@ -1,13 +1,16 @@
+import React from 'react'
 import punsStyles from './puns.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import { ingredientsPropType } from '../../utils/prop-types';
 
-function Puns({type, data}) {
+
+const Puns = ({type, data}) => {
     return (
         <>
         {data.map((val, index)=>(
             val.type === type && (
-                <div className={punsStyles.item} key={index}>
+                <div className={punsStyles.item} key={val._id} id={val._id} >
                     <div className={punsStyles.counter}>
                         <div className={punsStyles.round}>
                             <div className={punsStyles.remains}>
@@ -33,9 +36,9 @@ function Puns({type, data}) {
     );
   }
   
-export default Puns
+export default React.memo(Puns)
 
 Puns.propTypes = {
-    data: PropTypes.array,
-    type: PropTypes.string
+    data: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired,
+    type: PropTypes.string.isRequired
   }; 
