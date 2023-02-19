@@ -6,7 +6,6 @@ import BurgerConstructor from '../constructor/BurgerConstructor';
 import { getIngr } from '../../utils/burger-api';
 import Spinner from '../spinner/Spinner';
 
-
 const App = () => {
 
    const [data, setIngr] = useState([])
