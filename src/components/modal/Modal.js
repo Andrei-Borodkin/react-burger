@@ -3,12 +3,29 @@ import ReactDOM from 'react-dom'
 import moduleStyles from './modal.module.css';
 import { CloseIcon, CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import ModalOverlay from '../modal-overlay/ModalOverlay';
 
 const modalDiv = document.getElementById("modals")
 
-const modal = ({close}) => {
+const Modal = ({isShow, close}) => {
+
+    React.useEffect(() => {
+        const modalDiv = document.getElementById("modalConst")
+        const ModalOverlay = (e) => { e.target === modalDiv && close() }
+        document.addEventListener("click", ModalOverlay)
+    
+        const esc = (e) => { e.key === "Escape" && isShow && close() }
+        document.addEventListener("keydown", esc)
+        
+        return () => {
+          document.removeEventListener("click", ModalOverlay)
+          document.removeEventListener("keydown", esc)
+        }
+      }, [isShow, close]);
+    
+
     return ReactDOM.createPortal (
-        <div className= {moduleStyles.modal} id="modalConst">
+        <>
             <div className={moduleStyles.wrapper}>
                 <div className={moduleStyles.card}>
 
@@ -41,13 +58,15 @@ const modal = ({close}) => {
 
                 </div>
             </div>
-        </div>,
+            <ModalOverlay isShow={isShow} id="modalConst"/>
+            </>,
         modalDiv
     )
 }
 
-export default React.memo(modal);
+export default React.memo(Modal);
 
-modal.propTypes = {
-    close: PropTypes.func.isRequired
+Modal.propTypes = {
+    close: PropTypes.func.isRequired,
+    isShow: PropTypes.bool.isRequired
 };

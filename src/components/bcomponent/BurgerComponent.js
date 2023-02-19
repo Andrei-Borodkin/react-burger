@@ -11,14 +11,15 @@ const BurgerComponent = ({data}) => {
         <>
         {data.map((val, index)=>(
             <div className={burCompStyles.component} key={index}>
+
                 <div className={burCompStyles.svg}>
-                    <DragIcon type="primary" />
+                    { col === index ? "" : index === 0 ? "" : <DragIcon type="primary" />} 
                 </div>
                 
                 <ConstructorElement
                     type={ col === index ? "bottom" : index === 0 ? "top" : ""}
-                    isLocked={ col === index || index === 0 ? true : false}
-                    text={val.name}
+                    isLocked={ col === index || index === 0 ? true : false }
+                    text={ col === index ? `${val.name} (низ)`  : index === 0 ? `${val.name} (верх)` : val.name }
                     price={val.price}
                     thumbnail={val.image}
                 />

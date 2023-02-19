@@ -17,20 +17,6 @@ const BurgerConstructor = ({data}) => {
     return rez + arr.price;
   }, 0);
 
-  React.useEffect(() => {
-    const modalDiv = document.getElementById("modalConst")
-    const ModalOverlay = (e) => { e.target === modalDiv && closeModal() }
-    document.addEventListener("click", ModalOverlay)
-
-    const esc = (e) => { e.key === "Escape" && isShow && closeModal() }
-    document.addEventListener("keydown", esc)
-
-    return () => {
-      document.removeEventListener("click", ModalOverlay)
-      document.removeEventListener("keydown", esc)
-    }
-  }, [isShow]);
-
   return (
     <main className={ConstStyles.main}>
 
@@ -50,7 +36,7 @@ const BurgerConstructor = ({data}) => {
 
       {isShow &&
         <div>
-          <Modal close={closeModal} />
+          <Modal isShow={isShow} close={closeModal} />
         </div>
       }
     </main>

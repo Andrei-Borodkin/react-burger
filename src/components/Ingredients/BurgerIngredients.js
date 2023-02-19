@@ -13,20 +13,6 @@ const BurgerIngredients = ({data}) => {
   const openModal = () => { setState(true) }
   const closeModal = () => { setState(false) }
 
-  React.useEffect(() => {
-    const modalDiv = document.getElementById("modalIngr")
-    const ModalOverlay = (e) => { e.target === modalDiv && closeModal() }
-    document.addEventListener("click", ModalOverlay)
-
-    const esc = (e) => { e.key === "Escape" && isShow && closeModal() }
-    document.addEventListener("keydown", esc)
-
-    return () => {
-      document.removeEventListener("click", ModalOverlay)
-      document.removeEventListener("keydown", esc)
-    }
-  }, [isShow]);
-
   const bType = data.map(val => val.type).filter((item, index, arr) => {
     return arr.indexOf(item) === index;
   });
@@ -55,7 +41,7 @@ const BurgerIngredients = ({data}) => {
       <section className={IngrStyles.section}>
         {bType.map((val, index) => (
           <div key={index}>
-            <div className={IngrStyles.headline} id={val}>
+            <div className={IngrStyles.headline} id={val} >
               <span className={IngrStyles.headlineSpan}>{rusHead(val)}</span>
             </div>
 
@@ -69,7 +55,7 @@ const BurgerIngredients = ({data}) => {
 
       {isShow && (
         <div>
-          <IngrModal close={closeModal} />
+          <IngrModal isShow={isShow} close={closeModal} />
         </div>
       )}
 

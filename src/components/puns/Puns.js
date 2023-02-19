@@ -8,7 +8,7 @@ import { ingredientsPropType } from '../../utils/prop-types';
 const Puns = ({type, data}) => {
     return (
         <>
-        {data.map((val, index)=>(
+        {data.map((val)=>(
             val.type === type && (
                 <div className={punsStyles.item} key={val._id} id={val._id} >
                     <div className={punsStyles.counter}>
