@@ -16,7 +16,7 @@ const BurgerIngredients = ({data}) => {
   const closeModal = () => { setState(false) }
   
   const dataModul =  data.filter((item) => item._id === id)
-  console.log(dataModul)
+
   const bType = data.map(val => val.type).filter((item, index, arr) => {
     return arr.indexOf(item) === index;
   });
