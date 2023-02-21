@@ -20,10 +20,8 @@ const BurgerConstructor = ({data}) => {
   return (
     <main className={ConstStyles.main}>
 
-      <section className={ConstStyles.section}>
-        <BurgerComponent data={data} />
-      </section>
-
+      <BurgerComponent data={data} />
+      
       <section className={ConstStyles.info}>
         <div className={ConstStyles.price}>
           <p className={ConstStyles.p}>{summ}</p>

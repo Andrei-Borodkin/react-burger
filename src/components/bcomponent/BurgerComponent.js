@@ -9,24 +9,48 @@ const BurgerComponent = ({data}) => {
     const col = data.length - 1
     return (
         <>
-        {data.map((val, index)=>(
-            <div className={burCompStyles.component} key={index}>
-
-                <div className={burCompStyles.svg}>
-                    { col === index ? "" : index === 0 ? "" : <DragIcon type="primary" />} 
-                </div>
-                
+        <section  className={burCompStyles.section}>
+            <div className={`${burCompStyles.component} ml-4`} >
                 <ConstructorElement
-                    type={ col === index ? "bottom" : index === 0 ? "top" : ""}
-                    isLocked={ col === index || index === 0 ? true : false }
-                    text={ col === index ? `${val.name} (низ)`  : index === 0 ? `${val.name} (верх)` : val.name }
-                    price={val.price}
-                    thumbnail={val.image}
+                    type={ "top"}
+                    isLocked={ true }
+                    text={`${data[0].name} (верх)`}
+                    price={data[0].price}
+                    thumbnail={data[0].image}
                 />
-                
             </div>
-        ))}
-        </>      
+
+            <section className={`${burCompStyles.sectionOver} mb-2`} >
+                {data.map((val, index)=> (
+                    
+                    index > 0 && index < col &&
+                    <div className={burCompStyles.component} key={index}>
+                        <div className={burCompStyles.svg}>
+                            <DragIcon type="primary" />
+                        </div>
+
+                        <ConstructorElement
+                            isLocked={false}
+                            text={val.name}
+                            price={val.price}
+                            thumbnail={val.image}
+                        />
+                    </div>
+
+                ))}
+            </section>
+            
+            <div className={`${burCompStyles.component} ml-4`} >
+                <ConstructorElement
+                    type={"bottom"}
+                    isLocked={true}
+                    text={`${data[col].name} (низ)`}
+                    price={data[col].price}
+                    thumbnail={data[col].image}
+                />
+            </div>
+        </section>
+        </>
       )
   }
 

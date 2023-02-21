@@ -7,6 +7,35 @@
     flex-direction: row-reverse;
 }
 
+.section {
+    padding: 0px;
+    position: absolute;
+    height: 656px;
+    left: 16px;
+    top: 100px;
+}
+
+.sectionOver {
+    padding: 0px;
+    position: relative;
+    height: 469px;
+    left: 16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.sectionOver::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+.sectionOver::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+ 
+.sectionOver::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
 .ingridient {
     display: flex;
     flex-direction: row;
