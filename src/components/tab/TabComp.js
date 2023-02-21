@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const TabComp = () => {
