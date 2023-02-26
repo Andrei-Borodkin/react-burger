@@ -5,12 +5,18 @@ import PropTypes from 'prop-types';
 import { ingredientsPropType } from '../../utils/prop-types';
 
 
-const Puns = ({type, data}) => {
+const Puns = ({type, data, openModal, getId}) => {
+
+    const openAndGet = (id) => {
+        openModal()
+        getId(id)
+    }
+
     return (
         <>
-        {data.map((val, index)=>(
+        {data.map((val)=>(
             val.type === type && (
-                <div className={punsStyles.item} key={val._id} id={val._id} >
+                <div className={punsStyles.item} key={val._id} id={val._id} onClick={() => openAndGet(val._id)} >
                     <div className={punsStyles.counter}>
                         <div className={punsStyles.round}>
                             <div className={punsStyles.remains}>
@@ -20,7 +26,7 @@ const Puns = ({type, data}) => {
                     </div>
 
                     <div className={punsStyles.content}>
-                        <img src={val.image} className={punsStyles.img} />
+                        <img src={val.image} className={punsStyles.img} alt="изображение ингридиента"/>
                         <div className={punsStyles.price}>
                             {val.price}
                             <CurrencyIcon type="primary" />
@@ -40,5 +46,7 @@ export default React.memo(Puns)
 
 Puns.propTypes = {
     data: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    openModal: PropTypes.func.isRequired,
+    getId: PropTypes.func.isRequired
   }; 

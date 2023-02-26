@@ -6,29 +6,6 @@
     top: 128px;
 }
 
-.section {
-    padding: 0px;
-    position: absolute;
-    height: 656px;
-    left: 16px;
-    top: 100px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.section::-webkit-scrollbar {
-    width: 8px;
-}
- 
-.section::-webkit-scrollbar-track {
-    background: #2F2F37;
-}
- 
-.section::-webkit-scrollbar-thumb {
-    background: #8585AD;
-    border: 3px solid #8585AD;
-}
-
 .info {
     display: flex;
     flex-direction: row;

@@ -7,25 +7,15 @@ import PropTypes from 'prop-types';
 import { ingredientsPropType } from '../../utils/prop-types';
 
 const BurgerIngredients = ({data}) => {
-
+  
   const [isShow, setState] = useState(false)
-
+  const [id, setId] = useState("")
+ 
   const openModal = () => { setState(true) }
+  const getId = (id) => { setId(id) }
   const closeModal = () => { setState(false) }
-
-  React.useEffect(() => {
-    const modalDiv = document.getElementById("modalIngr")
-    const ModalOverlay = (e) => { e.target === modalDiv && closeModal() }
-    document.addEventListener("click", ModalOverlay)
-
-    const esc = (e) => { e.key === "Escape" && isShow && closeModal() }
-    document.addEventListener("keydown", esc)
-
-    return () => {
-      document.removeEventListener("click", ModalOverlay)
-      document.removeEventListener("keydown", esc)
-    }
-  }, [isShow]);
+  
+  const dataModul =  data.filter((item) => item._id === id)
 
   const bType = data.map(val => val.type).filter((item, index, arr) => {
     return arr.indexOf(item) === index;
@@ -55,12 +45,12 @@ const BurgerIngredients = ({data}) => {
       <section className={IngrStyles.section}>
         {bType.map((val, index) => (
           <div key={index}>
-            <div className={IngrStyles.headline} id={val}>
+            <div className={IngrStyles.headline} id={val} >
               <span className={IngrStyles.headlineSpan}>{rusHead(val)}</span>
             </div>
 
-            <div className={IngrStyles.puns} onClick={openModal}>
-              <Puns type={val} data={data} />
+            <div className={IngrStyles.puns} >
+              <Puns type={val} data={data} openModal={openModal} getId={getId}/>
             </div>
           </div>
         ))}
@@ -69,7 +59,7 @@ const BurgerIngredients = ({data}) => {
 
       {isShow && (
         <div>
-          <IngrModal close={closeModal} />
+          <IngrModal isShow={isShow} close={closeModal} dataModul={dataModul}/>
         </div>
       )}
 
