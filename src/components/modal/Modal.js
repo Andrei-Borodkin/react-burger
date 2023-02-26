@@ -7,7 +7,7 @@ import ModalOverlay from '../modal-overlay/ModalOverlay';
 
 const modalDiv = document.getElementById("modals")
 
-const Modal = ({isShow, close}) => {
+const Modal = ({isShow, close, order}) => {
 
     React.useEffect(() => {
         const modalDiv = document.getElementById("modalConst")
@@ -34,7 +34,7 @@ const Modal = ({isShow, close}) => {
                     </div>
 
                     <h1 className={moduleStyles.number}>
-                        <span className={moduleStyles.numberSpan}>034536</span>
+                        <span className={moduleStyles.numberSpan}>{order}</span>
                     </h1>
 
                     <p className={moduleStyles.id}>
@@ -68,5 +68,6 @@ export default React.memo(Modal);
 
 Modal.propTypes = {
     close: PropTypes.func.isRequired,
-    isShow: PropTypes.bool.isRequired
+    isShow: PropTypes.bool.isRequired,
+    order: PropTypes.string.isRequired
 };

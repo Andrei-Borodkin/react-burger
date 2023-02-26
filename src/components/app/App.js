@@ -5,11 +5,12 @@ import BurgerIngredients from '../Ingredients/BurgerIngredients';
 import BurgerConstructor from '../constructor/BurgerConstructor';
 import { getIngr } from '../../utils/burger-api';
 import Spinner from '../spinner/Spinner';
+import { DataContext } from '../../services/appContext';
 
 const App = () => {
 
-   const [data, setIngr] = useState([])
    const [spinner, setSpinner] = useState(true)
+   const [data, setIngr] = useState([])
 
    useEffect(() => {
       getIngr()
@@ -25,8 +26,12 @@ const App = () => {
             <Spinner />
          ) : (
             <>
+           
                <BurgerIngredients data={data} />
-               <BurgerConstructor data={data} />
+
+               <DataContext.Provider value={[data]}>
+                  <BurgerConstructor />
+               </DataContext.Provider>
             </>
          )}
       </div>

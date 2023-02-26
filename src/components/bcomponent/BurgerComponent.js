@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burCompStyles from './burcomp.module.css';
-import PropTypes from 'prop-types';
-import { ingredientsPropType } from '../../utils/prop-types';
+import { DataContext } from '../../services/appContext';
 
-const BurgerComponent = ({data}) => {
+const BurgerComponent = () => {
+   
+    const [data]  = useContext(DataContext);
+    const dataBun =  data.filter((item) => item.type === "bun")
     
-    const col = data.length - 1
     return (
         <>
         <section  className={burCompStyles.section}>
@@ -14,16 +15,16 @@ const BurgerComponent = ({data}) => {
                 <ConstructorElement
                     type={ "top"}
                     isLocked={ true }
-                    text={`${data[0].name} (верх)`}
-                    price={data[0].price}
-                    thumbnail={data[0].image}
+                    text={`${dataBun[0].name} (верх)`}
+                    price={dataBun[0].price}
+                    thumbnail={dataBun[0].image}
                 />
             </div>
 
             <section className={`${burCompStyles.sectionOver} mb-2`} >
                 {data.map((val, index)=> (
                     
-                    index > 0 && index < col &&
+                    val.type !== "bun" && 
                     <div className={burCompStyles.component} key={index}>
                         <div className={burCompStyles.svg}>
                             <DragIcon type="primary" />
@@ -44,9 +45,9 @@ const BurgerComponent = ({data}) => {
                 <ConstructorElement
                     type={"bottom"}
                     isLocked={true}
-                    text={`${data[col].name} (низ)`}
-                    price={data[col].price}
-                    thumbnail={data[col].image}
+                    text={`${dataBun[0].name} (низ)`}
+                    price={dataBun[0].price}
+                    thumbnail={dataBun[0].image}
                 />
             </div>
         </section>
@@ -55,7 +56,3 @@ const BurgerComponent = ({data}) => {
   }
 
   export default React.memo(BurgerComponent)
-
-  BurgerComponent.propTypes = {
-    data: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired
-  };
