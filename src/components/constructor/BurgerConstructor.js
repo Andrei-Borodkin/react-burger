@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useMemo} from 'react';
 import ConstStyles from './burgerconst.module.css';
 import BurgerComponent from '../bcomponent/BurgerComponent';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -13,21 +13,26 @@ const BurgerConstructor = () => {
 
   const [data]  = useContext(DataContext);
 
-  const idInger = data.map(item => item._id)
+
   const openModal = () => { 
+
+    
+    const idInger = data.map(item => item._id) // в будующем [bun.id, ...ingredientsId, bun.id]
     getOrder(idInger)
       .then(setOrder)
       .catch(() => alert("Ошибка заказа"))
       .finally(() => setState(true))
+
   }
 
   const closeModal = () => { setState(false) }
 
-  const summIng = data.reduce((rez, arr) => {
-      return  rez + (arr.type !== "bun" && arr.price)
-  }, 0);
-  const dataBun =  data.filter((item) => item.type === "bun")
-
+  const summIng = useMemo(() =>
+    data.reduce((rez, arr) => {
+      return rez + (arr.type !== "bun" && arr.price)
+    }, 0), [data])
+      
+  const dataBun =  data.find((item) => item.type === "bun")
 
   return (
     <main className={ConstStyles.main}>
@@ -36,7 +41,7 @@ const BurgerConstructor = () => {
 
       <section className={ConstStyles.info}>
         <div className={ConstStyles.price}>
-          <p className={ConstStyles.p}>{summIng + (dataBun[0].price * 2)}</p>
+          <p className={ConstStyles.p}>{summIng + (dataBun.price * 2)}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="medium" onClick={openModal}>

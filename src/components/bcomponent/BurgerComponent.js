@@ -6,18 +6,17 @@ import { DataContext } from '../../services/appContext';
 const BurgerComponent = () => {
    
     const [data]  = useContext(DataContext);
-    const dataBun =  data.filter((item) => item.type === "bun")
+    const dataBun =  data.find((item) => item.type === "bun")
     
     return (
-        <>
         <section  className={burCompStyles.section}>
             <div className={`${burCompStyles.component} ml-4`} >
                 <ConstructorElement
                     type={ "top"}
                     isLocked={ true }
-                    text={`${dataBun[0].name} (верх)`}
-                    price={dataBun[0].price}
-                    thumbnail={dataBun[0].image}
+                    text={`${dataBun.name} (верх)`}
+                    price={dataBun.price}
+                    thumbnail={dataBun.image}
                 />
             </div>
 
@@ -45,13 +44,12 @@ const BurgerComponent = () => {
                 <ConstructorElement
                     type={"bottom"}
                     isLocked={true}
-                    text={`${dataBun[0].name} (низ)`}
-                    price={dataBun[0].price}
-                    thumbnail={dataBun[0].image}
+                    text={`${dataBun.name} (низ)`}
+                    price={dataBun.price}
+                    thumbnail={dataBun.image}
                 />
             </div>
         </section>
-        </>
       )
   }
 

@@ -26,10 +26,8 @@ const App = () => {
             <Spinner />
          ) : (
             <>
-           
-               <BurgerIngredients data={data} />
-
                <DataContext.Provider value={[data]}>
+                  <BurgerIngredients />
                   <BurgerConstructor />
                </DataContext.Provider>
             </>
