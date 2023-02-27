@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import punsStyles from './puns.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
-import { ingredientsPropType } from '../../utils/prop-types';
+import { DataContext } from '../../services/appContext';
 
 
-const Puns = ({type, data, openModal, getId}) => {
+const Puns = ({type, openModal, getId}) => {
+
+    const [data]  = useContext(DataContext);
 
     const openAndGet = (id) => {
         openModal()
@@ -45,7 +47,6 @@ const Puns = ({type, data, openModal, getId}) => {
 export default React.memo(Puns)
 
 Puns.propTypes = {
-    data: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired,
     type: PropTypes.string.isRequired,
     openModal: PropTypes.func.isRequired,
     getId: PropTypes.func.isRequired

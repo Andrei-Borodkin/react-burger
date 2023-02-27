@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import IngrStyles from './ingredients.module.css';
 import TabComp from '../tab/TabComp';
 import Puns from '../puns/Puns';
 import IngrModal from '../ingrModal/IngrModal';
-import PropTypes from 'prop-types';
-import { ingredientsPropType } from '../../utils/prop-types';
+import { DataContext } from '../../services/appContext';
 
-const BurgerIngredients = ({data}) => {
+const BurgerIngredients = () => {
   
   const [isShow, setState] = useState(false)
   const [id, setId] = useState("")
@@ -15,6 +14,8 @@ const BurgerIngredients = ({data}) => {
   const getId = (id) => { setId(id) }
   const closeModal = () => { setState(false) }
   
+  const [data]  = useContext(DataContext);
+
   const dataModul =  data.filter((item) => item._id === id)
 
   const bType = data.map(val => val.type).filter((item, index, arr) => {
@@ -50,7 +51,7 @@ const BurgerIngredients = ({data}) => {
             </div>
 
             <div className={IngrStyles.puns} >
-              <Puns type={val} data={data} openModal={openModal} getId={getId}/>
+              <Puns type={val} openModal={openModal} getId={getId}/>
             </div>
           </div>
         ))}
@@ -69,7 +70,3 @@ const BurgerIngredients = ({data}) => {
 }
 
 export default React.memo(BurgerIngredients)
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired
-};
