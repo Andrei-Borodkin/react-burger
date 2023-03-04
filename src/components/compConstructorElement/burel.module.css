@@ -1,0 +1,18 @@
+.component {
+    width: 568px;
+    height: 80px;
+    position: relative;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: grab;
+}
+
+.svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    top: calc(50% - 24px/2);
+}
+

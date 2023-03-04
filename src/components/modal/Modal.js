@@ -1,13 +1,23 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import ReactDOM from 'react-dom'
 import moduleStyles from './modal.module.css';
 import { CloseIcon, CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
+import { useDispatch, useSelector } from "react-redux";
+import { showSelector } from "../../services/redux/selectors/selectorsConstr";
+import { orderSelector } from "../../services/redux/selectors/selectorsOrder";
+import { actionConstr } from "../../services/redux/actionCreators/actionConstr";
 
 const modalDiv = document.getElementById("modals")
 
-const Modal = ({isShow, close, order}) => {
+const Modal = () => {
+
+    const dispatch = useDispatch()
+
+    const isShow = useSelector(showSelector)
+    const order = useSelector(orderSelector)
+
+    const close = useCallback(() => { dispatch(actionConstr.setShow(false)) }, [dispatch])
 
     React.useEffect(() => {
         const modalDiv = document.getElementById("modalConst")
@@ -58,16 +68,10 @@ const Modal = ({isShow, close, order}) => {
 
                 </div>
             </div>
-            <ModalOverlay isShow={isShow} id="modalConst"/>
+            <ModalOverlay id="modalConst"/>
             </>,
         modalDiv
     )
 }
 
 export default React.memo(Modal);
-
-Modal.propTypes = {
-    close: PropTypes.func.isRequired,
-    isShow: PropTypes.bool.isRequired,
-    order: PropTypes.string.isRequired
-};

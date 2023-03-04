@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { curNavSelector } from "../../services/redux/selectors/selectorsIngr";
+import { useSelector, useDispatch } from "react-redux";
+import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
 
-const TabComp = () => {
-  const [current, setCurrent] = useState('bun')
+const TabComp = ( ) => {
+  
+  const dispatch = useDispatch()
+  const current = useSelector(curNavSelector)
 
-  const onTabClick = (tab) => {
-    setCurrent(tab)
-    const el = document.getElementById(tab)
+  const onTabClick = (current) => {
+    dispatch(actionIngr.setNavigation(current))
+    const el = document.getElementById(current)
     el && el.scrollIntoView({ behavior: "smooth"})
   }
 
@@ -16,11 +21,12 @@ const TabComp = () => {
         Булки
       </Tab>
       <Tab value="main" active={current === 'main'} onClick={onTabClick}>
-        Соусы
-      </Tab>
-      <Tab value="sauce" active={current === 'sauce'} onClick={onTabClick}>
         Начинки
       </Tab>
+      <Tab value="sauce" active={current === 'sauce'} onClick={onTabClick}>
+        Соусы
+      </Tab>
+
     </div>
   )
 }
