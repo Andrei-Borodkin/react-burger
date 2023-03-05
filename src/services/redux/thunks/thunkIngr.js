@@ -8,10 +8,19 @@ export const fetchData = () => {
         dispatch(actionSpinner.loading(true))
 
         getIngr()
-            .then((data) => dispatch(actionIngr.setData(data)))
-            .catch(() => alert("Ошибка загрузки ингридиентов"))
-            .finally(() => dispatch(actionSpinner.loading(false)))
-
+            .then((data) => {
+                if (data) {
+                    dispatch(actionIngr.setData(data))
+                    dispatch(actionSpinner.loading(false))
+                } else {
+                    dispatch(actionIngr.setInitialState())
+                    alert("Полученные данные не корректны")
+                }
+            })
+            .catch(() => {
+                dispatch(actionIngr.setInitialState())
+                alert("Ошибка получения ингридиентов")
+            })
     }
 };
 

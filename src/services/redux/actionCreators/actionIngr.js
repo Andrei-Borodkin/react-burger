@@ -1,4 +1,4 @@
-import { SET_DATA, SET_ID_MOD, SET_SHOW_INGR, SET_NAVIGATION } from "../actionTypes/actionTypes";
+import { SET_DATA, SET_ID_MOD, SET_SHOW_INGR, SET_NAVIGATION, GET_INGR_FAILED } from "../actionTypes/actionTypes";
 
 export const actionIngr = {
   setData: (payload) => ({
@@ -17,4 +17,8 @@ export const actionIngr = {
     type: SET_NAVIGATION,
     payload
   }),
+  setInitialState: () => ({
+    type: GET_INGR_FAILED,
+  }),
+
 }

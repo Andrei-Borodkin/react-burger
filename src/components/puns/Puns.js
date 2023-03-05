@@ -35,7 +35,7 @@ const Puns = ({ valPuns }) => {
     
     const [{ opacity }, dragRef] = useDrag({
         type: "data",
-        item: {id_move: valPuns._id},
+        item: {valPuns},
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.3 : 1
         })

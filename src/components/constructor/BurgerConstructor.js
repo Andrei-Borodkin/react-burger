@@ -8,7 +8,6 @@ import { showSelector } from "../../services/redux/selectors/selectorsConstr";
 import { dataSelector } from "../../services/redux/selectors/selectorsIngr";
 import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
-import { actionConstr } from "../../services/redux/actionCreators/actionConstr"
 
 const BurgerConstructor = () => {
 
@@ -16,18 +15,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch()
 
   const isShow = useSelector(showSelector)
-  const  data = useSelector(dataSelector)
 
-  // временное решение .. тк непонятно как должен выглядеть конструктор без ингридиентов
-  useEffect(() => {
-
-    dispatch(actionConstr.clearConstr())
-    data.map((val, index)=> (
-        dispatch(actionConstr.addConstr(val))
-    ))
-    
-  }, [data])
-  
   const dataBun = useSelector(showIngrBun)
   const ingr = useSelector(showIngr)
 

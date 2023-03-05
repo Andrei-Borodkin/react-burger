@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { SET_SHOW , ADD_CONSTR, CL_CONSTR, DEL_INGR, UPD_INGR} from "../actionTypes/actionTypes";
+import { SET_SHOW , ADD_CONSTR, CL_CONSTR, DEL_INGR, UPD_INGR } from "../actionTypes/actionTypes";
 
 export const actionConstr = {
   setShow: (payload) => ({

@@ -1,4 +1,4 @@
-import { SET_DATA,  SET_ID_MOD, SET_SHOW_INGR, SET_NAVIGATION} from "../actionTypes/actionTypes";
+import { SET_DATA,  SET_ID_MOD, SET_SHOW_INGR, SET_NAVIGATION, GET_INGR_FAILED} from "../actionTypes/actionTypes";
 
 export const initialState = {
   data: [],
@@ -31,6 +31,10 @@ export const reducerIngr = (state = initialState, action) => {
         ...state,
         curNav: action.payload
       }
+      case GET_INGR_FAILED:
+        return {
+          state: initialState
+        }
     default:
       return state;
   }

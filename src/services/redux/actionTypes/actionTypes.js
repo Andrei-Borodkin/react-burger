@@ -9,3 +9,6 @@ export const CL_CONSTR = "CL_CONSTR";
 export const SET_NAVIGATION = "SET_NAVIGATION";
 export const DEL_INGR = "DEL_INGR";
 export const UPD_INGR = "UPD_INGR";
+export const GET_INGR_FAILED = "GET_INGR_FAILED";
+export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
+

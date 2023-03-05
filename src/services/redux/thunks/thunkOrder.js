@@ -9,11 +9,20 @@ export const fetchOrder = (idInger) => {
         dispatch(actionSpinner.loading(true))
 
         getOrder(idInger)
-        .then((data) => dispatch(actionOrder.setOrder(data)))
-        .catch(() => alert("Ошибка заказа"))
-        .finally(() =>  dispatch(actionSpinner.loading(false)))
-
-        dispatch(actionConstr.setShow(true))
-
+            .then((data) => {
+            if (data) {
+                dispatch(actionOrder.setOrder(data))
+                dispatch(actionSpinner.loading(false))
+                dispatch(actionConstr.setShow(true))
+            }else{
+                dispatch(actionOrder.setInitialState())
+                alert("Ошибка получения номера заказа")
+                dispatch(actionSpinner.loading(false))
+            }
+            })
+            .catch(() => {
+                alert("Ошибка получения номера заказа")
+                dispatch(actionSpinner.loading(false))
+            })
     }
 };

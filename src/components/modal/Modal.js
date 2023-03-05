@@ -17,7 +17,10 @@ const Modal = () => {
     const isShow = useSelector(showSelector)
     const order = useSelector(orderSelector)
 
-    const close = useCallback(() => { dispatch(actionConstr.setShow(false)) }, [dispatch])
+    const close = useCallback(() => { 
+        dispatch(actionConstr.setShow(false)) 
+        dispatch(actionConstr.clearConstr())
+    }, [dispatch])
 
     React.useEffect(() => {
         const modalDiv = document.getElementById("modalConst")
