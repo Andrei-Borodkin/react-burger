@@ -1,14 +1,25 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import ReactDOM from 'react-dom'
 import moduleStyles from './ingrModal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
-import { ingredientsPropType } from '../../utils/prop-types';
+import { useDispatch, useSelector } from "react-redux";
+import { dataSelector, idSelector, showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
+import { actionIngr } from "../../services/redux/actionCreators/actionIngr";
 
 const modalDiv = document.getElementById("modals")
 
-const IngrModal = ({ isShow, close, dataModul }) => {
+const IngrModal = () => {
+
+    const dispatch = useDispatch()
+
+    const isShow = useSelector(showIngrSelector)
+    const data = useSelector(dataSelector)
+    const id = useSelector(idSelector)
+
+    const dataModul = data.filter((item) => item._id === id)
+
+    const close =  useCallback(() => { dispatch(actionIngr.setShowIngr(false)) }, [isShow])
 
     React.useEffect(() => {
         const modalDiv = document.getElementById("modalIngr")
@@ -63,16 +74,10 @@ const IngrModal = ({ isShow, close, dataModul }) => {
 
                 </div>
             </div>
-            <ModalOverlay isShow={isShow} id="modalIngr" />
+            <ModalOverlay id="modalIngr" />
         </>,
         modalDiv
     )
 }
 
 export default React.memo(IngrModal);
-
-IngrModal.propTypes = {
-    close: PropTypes.func.isRequired,
-    isShow: PropTypes.bool.isRequired,
-    dataModul: PropTypes.arrayOf(ingredientsPropType.isRequired).isRequired
-};

@@ -1,40 +1,47 @@
-import React, {useState, useContext} from 'react';
+import React, { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import IngrStyles from './ingredients.module.css';
 import TabComp from '../tab/TabComp';
 import Puns from '../puns/Puns';
 import IngrModal from '../ingrModal/IngrModal';
-import { DataContext } from '../../services/appContext';
+import { useSelector, useDispatch } from "react-redux";
+import { dataSelector,  showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
+import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
 
 const BurgerIngredients = () => {
-  
-  const [isShow, setState] = useState(false)
-  const [id, setId] = useState("")
- 
-  const openModal = () => { setState(true) }
-  const getId = (id) => { setId(id) }
-  const closeModal = () => { setState(false) }
-  
-  const [data]  = useContext(DataContext);
 
-  const dataModul =  data.filter((item) => item._id === id)
-
+  const dispatch = useDispatch()
+  const data = useSelector(dataSelector)
+  const isShow = useSelector(showIngrSelector)
+  
   const bType = data.map(val => val.type).filter((item, index, arr) => {
     return arr.indexOf(item) === index;
   });
 
+  const [bunsRef, inViewBuns] = useInView({threshold: 0})
+  const [mainsRef, inViewMains] = useInView({threshold: 0})
+  const [sauceRef, inViewSauce] = useInView({threshold: 0})
+
+  useEffect(()=>{
+    if (inViewBuns) dispatch(actionIngr.setNavigation("bun"))
+    else if (inViewMains) dispatch(actionIngr.setNavigation("main"))
+    else if (inViewSauce) dispatch(actionIngr.setNavigation("sauce"))
+  }, [inViewBuns, inViewMains, inViewSauce, dispatch])
+
   const rusHead = (val) => {
-    var ansver = ""
+    var ansver = {}
     switch (val) {
-      case 'bun': ansver = 'Булки';
+      case 'bun': ansver = {kat: 'Булки', cref: bunsRef};
         break;
-      case 'main': ansver = 'Начинки';
+      case 'main': ansver = {kat: 'Начинки', cref: mainsRef}
         break;
-      case 'sauce': ansver = 'Соусы';
+      case 'sauce': ansver = {kat: 'Соусы', cref: sauceRef}
         break;
       default: ansver = 'мистический ингридиент';
     }
     return ansver
   }
+
   return (
     <main className={IngrStyles.main}>
       <div className={IngrStyles.title}>
@@ -46,12 +53,16 @@ const BurgerIngredients = () => {
       <section className={IngrStyles.section}>
         {bType.map((val, index) => (
           <div key={index}>
-            <div className={IngrStyles.headline} id={val} >
-              <span className={IngrStyles.headlineSpan}>{rusHead(val)}</span>
+            <div className={IngrStyles.headline} id={val} ref={rusHead(val).cref}>
+              <span className={IngrStyles.headlineSpan}>{rusHead(val).kat}</span>
             </div>
 
             <div className={IngrStyles.puns} >
-              <Puns type={val} openModal={openModal} getId={getId}/>
+              {data.filter((item) => item.type === val).map(( valPuns , i ) => (
+                 <div key={i}>
+                  <Puns valPuns={valPuns} />
+                </div>
+              ))}
             </div>
           </div>
         ))}
@@ -60,7 +71,7 @@ const BurgerIngredients = () => {
 
       {isShow && (
         <div>
-          <IngrModal isShow={isShow} close={closeModal} dataModul={dataModul}/>
+          <IngrModal />
         </div>
       )}
 
