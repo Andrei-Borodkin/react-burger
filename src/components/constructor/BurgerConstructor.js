@@ -1,38 +1,36 @@
-import React, {useState, useContext, useMemo} from 'react';
+import React, { useMemo, useEffect } from 'react';
 import ConstStyles from './burgerconst.module.css';
 import BurgerComponent from '../bcomponent/BurgerComponent';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/Modal';
-import { DataContext } from '../../services/appContext';
-import { getOrder } from '../../utils/burger-api';
+import { useDispatch, useSelector } from "react-redux";
+import { showSelector } from "../../services/redux/selectors/selectorsConstr";
+import { dataSelector } from "../../services/redux/selectors/selectorsIngr";
+import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
+import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 
 const BurgerConstructor = () => {
 
-  const [isShow, setState] = useState(false)
-  const [order, setOrder] = useState()
 
-  const [data]  = useContext(DataContext);
+  const dispatch = useDispatch()
 
+  const isShow = useSelector(showSelector)
+
+  const dataBun = useSelector(showIngrBun)
+  const ingr = useSelector(showIngr)
 
   const openModal = () => { 
-
-    
-    const idInger = data.map(item => item._id) // в будующем [bun.id, ...ingredientsId, bun.id]
-    getOrder(idInger)
-      .then(setOrder)
-      .catch(() => alert("Ошибка заказа"))
-      .finally(() => setState(true))
-
+    if (dataBun && ingr.length > 0) {
+      const idInger2 = [dataBun._id, ...ingr.map(item => item._id), dataBun._id]
+      dispatch( fetchOrder(idInger2) )
+    }else{
+      alert("Соберите заказ")
+    }
   }
-
-  const closeModal = () => { setState(false) }
-
+  
   const summIng = useMemo(() =>
-    data.reduce((rez, arr) => {
-      return rez + (arr.type !== "bun" && arr.price)
-    }, 0), [data])
-      
-  const dataBun =  data.find((item) => item.type === "bun")
+    ingr.length > 0 ? (ingr.reduce((rez, arr) => { return rez + arr.price }, 0) + (dataBun ? dataBun.price * 2 : 0)) : 0
+    , [ingr, dataBun])
 
   return (
     <main className={ConstStyles.main}>
@@ -41,7 +39,7 @@ const BurgerConstructor = () => {
 
       <section className={ConstStyles.info}>
         <div className={ConstStyles.price}>
-          <p className={ConstStyles.p}>{summIng + (dataBun.price * 2)}</p>
+          <p className={ConstStyles.p}>{summIng}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
@@ -51,7 +49,7 @@ const BurgerConstructor = () => {
 
       {isShow &&
         <div>
-          <Modal isShow={isShow} close={closeModal} order={order}/>
+          <Modal />
         </div>
       }
     </main>

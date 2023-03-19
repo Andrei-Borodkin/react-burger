@@ -7,7 +7,7 @@ const chekResp = (res) => {
 
 export const getIngr = () => {
     return fetch(`${SERVER_URL}/ingredients`)
-    .then(chekResp)
+    .then(chekResp )
     .then(data => {
         if (data?.success) return data.data;
         return Promise.reject(data)
