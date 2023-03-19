@@ -1,0 +1,77 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 80px;
+    position: absolute;
+    width: 480px;
+    height: 430px;
+    left: calc(50% - 480px/2);
+    top: 288px;
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+}
+
+
+.edit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0px;
+    gap: 24px;
+    width: 480px;
+}
+
+.frame {
+    width: 480px;
+    height: 30px;
+    font-weight: 700;
+    font-size: 24px;
+    display: flex;
+    color: #F2F2F3;
+    justify-content: center;
+    align-content: stretch;
+}
+
+.but {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+    width: 480px;
+    height: 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 8px;
+    width: 480px;
+    height: 24px;
+}
+
+
+
+.a {
+    color: #4C4CFF;
+}
+
+.p { 
+    color: #8585AD;
+}

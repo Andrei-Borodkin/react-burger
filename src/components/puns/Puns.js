@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 import { useDrag } from "react-dnd";
+import { Link, useLocation } from 'react-router-dom';
 
 const Puns = ({ valPuns }) => {
 
     const dispatch = useDispatch()
+    const location = useLocation();
 
     const dataBun = useSelector(showIngrBun)
     const ingr = useSelector(showIngr)
@@ -31,7 +33,6 @@ const Puns = ({ valPuns }) => {
         dispatch(actionIngr.setShowIngr(true))
         dispatch(actionIngr.setIdMod(id))
     }
-
     
     const [{ opacity }, dragRef] = useDrag({
         type: "data",
@@ -40,8 +41,17 @@ const Puns = ({ valPuns }) => {
             opacity: monitor.isDragging() ? 0.3 : 1
         })
     });
-    
+   
     return (
+
+        <Link
+
+        key={valPuns._id}
+        to={{ pathname: `/ingredients/${valPuns._id}` }}
+        state={{ background: location.pathname }}
+       className={punsStyles.link}
+      >
+
         <div 
             className={punsStyles.item} 
             key={valPuns._id} 
@@ -71,6 +81,7 @@ const Puns = ({ valPuns }) => {
                 </div>
             </div>
         </div>
+        </Link>
    );
   }
   

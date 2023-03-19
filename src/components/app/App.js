@@ -1,40 +1,59 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import appStyles from './app.module.css';
 import AppHeader from '../header/AppHeader';
 import BurgerIngredients from '../Ingredients/BurgerIngredients';
 import BurgerConstructor from '../constructor/BurgerConstructor';
 import Spinner from '../spinner/Spinner';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { loadingSelector } from "../../services/redux/selectors/selectorsSpinner";
-import { fetchData } from "../../services/redux/thunks/thunkIngr";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Routes, Route, useLocation } from 'react-router-dom';
+import LoginPage from '../../pages/login';
+import RegisterPage from '../../pages/register';
+import ForgotPage from '../../pages/forgot-password';
+import ResetPage from '../../pages/reset-password';
+import ProfilePage from '../../pages/profile';
+import NotFound404 from '../../pages/not-found';
+import { Toaster } from 'react-hot-toast';
+import IngrModal from '../ingrModal/IngrModal';
+import { ProtectedRouteElement } from '../protectedRoute/ProtectedRouteElement';
 
 const App = () => {
 
-   const dispatch = useDispatch()
-   const isLoading = useSelector(loadingSelector)
+   const location = useLocation();
+   const background = location.state && location.state.background;
+   const ipProps = location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
 
-   useEffect(() => {
-      dispatch( fetchData() )
-   }, [])
+   const isLoading = useSelector(loadingSelector)
 
    return (
       <div className={appStyles.body}>
+         <Toaster />
          <AppHeader />
+         {isLoading && <Spinner />}
+         <>
+            <DndProvider backend={HTML5Backend}>
+               <Routes location={background || location}>
+                  <Route path="/" element={[<BurgerIngredients key="BurgerIngredients"/>, <BurgerConstructor key="BurgerConstructor"/>]} />
+                  <Route path="/login" element={ <ProtectedRouteElement element={<LoginPage />} onlyUnAuth/> } />
+                  <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} onlyUnAuth/>} />
+                  <Route path="/forgot-password"  element={<ProtectedRouteElement element={<ForgotPage />} onlyUnAuth/>} />
+                  <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPage />} onlyUnAuth/>} />
+                  <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+                  <Route path="*" element={<NotFound404 />} />
 
-         {isLoading ? (
-            <Spinner />
-         ) : (
-               <>
-                  <DndProvider backend={HTML5Backend}>
-                     <BurgerIngredients />
-                     <BurgerConstructor />
-                  </DndProvider>
-               </>
-         )}
+                  {background === "/" ? 
+                     <Route path='/ingredients/:id' element={ <IngrModal /> } /> 
+                        : <Route path='/ingredients/:id' element={ <IngrModal ipProps={{ ipProps }} /> } />
+                  }
+
+               </Routes>
+            </DndProvider>
+         </>
       </div>
    );
+
 
 }
 

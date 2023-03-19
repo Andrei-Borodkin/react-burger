@@ -1,15 +1,15 @@
-import React, {useCallback } from 'react'
-import { ConstructorElement  } from '@ya.praktikum/react-developer-burger-ui-components'
+import React, { useCallback } from 'react'
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import burCompStyles from './burcomp.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 import { useDrop } from "react-dnd";
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr"
 import CompConstructorElement from '../compConstructorElement/CompConstructorElement'
-import  img_dump from '../../images/bun-dump.png';
+import img_dump from '../../images/bun-dump.png';
 
 const BurgerComponent = () => {
-   
+
     const dispatch = useDispatch()
 
     const dataBun = useSelector(showIngrBun)
@@ -36,7 +36,7 @@ const BurgerComponent = () => {
     const border = isHover ? '0.5px dashed #4c4cff' : '1px dashed transparent';
     const borderRadius = isHover ? '40px' : '';
 
-    
+
     return (
         <>
             {dataBun || ingr.length > 0 ?
@@ -102,7 +102,7 @@ const BurgerComponent = () => {
                 </section>
             }
         </>
-      )
-  }
+    )
+}
 
-  export default React.memo(BurgerComponent)
+export default React.memo(BurgerComponent)
