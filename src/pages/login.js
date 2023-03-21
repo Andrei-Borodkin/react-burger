@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
 import { rFRPEmailSelector } from '../services/redux/selectors/selectorsForgResPas';
 import { actionForgResPas } from '../services/redux/actionCreators/actionForgResPas';
+import { toastError } from '../utils/func';
 
 const LoginPage = () => {
 
@@ -29,7 +30,7 @@ const LoginPage = () => {
         if (email !== '' && password !== '') {
             dispatch(fetchSignIn())
         } else {
-            toast.error(`Поля формы не могут быть пустыми`, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} })
+            toastError(`Поля формы не могут быть пустыми`)
         }
     }
 

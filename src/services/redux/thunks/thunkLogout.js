@@ -2,13 +2,13 @@ import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionSignIn } from "../actionCreators/actionSignIn"
 import { logout } from '../../../utils/auth-api';
 import {  deleteCookie } from '../../../utils/func-cooke';
-import toast from 'react-hot-toast';
 import { actionConstr } from "../actionCreators/actionConstr";
 import { actionAutReg } from "../actionCreators/actionAutReg";
 import { actionForgResPas } from "../actionCreators/actionForgResPas";
 import { actionIngr } from "../actionCreators/actionIngr";
 import { actionOrder } from "../actionCreators/actionOrder";
 import { fetchRefToken } from "./thunkRefToken";
+import { toastError, toastSuccess } from "../../../utils/func";
 
 
 export const fetchLogout = () => {
@@ -30,7 +30,7 @@ export const fetchLogout = () => {
                     dispatch(actionSignIn.clSignIn())
                     dispatch(actionOrder.setInitialState())
                     dispatch(actionSpinner.loading(false))
-                    toast.success(`Успешный выход из системы`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}});
+                    toastSuccess(`Успешный выход из системы`)
 
                 } else {
                     deleteCookie('accessToken')
@@ -43,7 +43,7 @@ export const fetchLogout = () => {
                     dispatch(actionOrder.setInitialState())
                     dispatch(actionSignIn.clSignIn())
                     dispatch(actionOrder.setInitialState())
-                    toast.error(`Выход с ошибкой ${data.message}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(`Выход с ошибкой ${data.message}`)
                     dispatch(actionSpinner.loading(false))
                 }
             })
@@ -63,7 +63,7 @@ export const fetchLogout = () => {
                     dispatch(actionOrder.setInitialState())
                     dispatch(actionSignIn.clSignIn())
                     dispatch(actionOrder.setInitialState())
-                    toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(err.message)
                     dispatch(actionSpinner.loading(false))
                 }
             })

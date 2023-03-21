@@ -1,7 +1,7 @@
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionAutReg } from "../actionCreators/actionAutReg"
 import { setRegisterData } from '../../../utils/auth-api';
-import toast from 'react-hot-toast';
+import { toastError, toastSuccess } from "../../../utils/func";
 
 export const fetchRgistr = () => {
 
@@ -14,15 +14,15 @@ export const fetchRgistr = () => {
         setRegisterData(form)
             .then((data) => {
                 if (data) {
-                    toast.success('Пользователь зарегистрирован', { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono' } });
+                    toastSuccess('Пользователь зарегистрирован')
                     dispatch(actionAutReg.setStatus(true))
                 } else {
-                    toast.error('Ошибка получения данных', { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono' } });
+                    toastError('Ошибка получения данных')
                     dispatch(actionSpinner.loading(false))
                 }
             })
             .catch((err) => {
-                toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono' } });
+                toastError(err.message)
                 dispatch(actionSpinner.loading(false))
             })
 

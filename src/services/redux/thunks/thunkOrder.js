@@ -2,8 +2,8 @@ import { actionConstr } from "../actionCreators/actionConstr"
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionOrder } from "../actionCreators/actionOrder"
 import { getOrder } from '../../../utils/burger-api';
-import toast from 'react-hot-toast';
 import { fetchRefToken } from "./thunkRefToken";
+import { toastError, toastSuccess } from "../../../utils/func";
 
 export const fetchOrder = (idInger) => {
     return (dispatch, getState, extra) => {
@@ -16,10 +16,10 @@ export const fetchOrder = (idInger) => {
                     dispatch(actionOrder.setOrder(data))
                     dispatch(actionSpinner.loading(false))
                     dispatch(actionConstr.setShow(true))
-                    toast.success('Заказ зарегистрирован', { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastSuccess('Заказ зарегистрирован')
                 } else {
                     dispatch(actionOrder.setInitialState())
-                    toast.error('Ошибка получения номера заказа', { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError('Ошибка получения номера заказа')
                     dispatch(actionSpinner.loading(false))
                 }
             })
@@ -27,7 +27,7 @@ export const fetchOrder = (idInger) => {
                 if (err.message === 'jwt expired') {
                     dispatch(fetchRefToken("err_getIngr"))
                 }else{
-                    toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(err.message)
                     dispatch(actionSpinner.loading(false))
                 }
             })

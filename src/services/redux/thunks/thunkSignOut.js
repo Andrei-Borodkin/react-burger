@@ -2,7 +2,7 @@ import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionSignIn } from "../actionCreators/actionSignIn"
 import { loginRequest } from '../../../utils/auth-api';
 import { setCookie } from '../../../utils/func-cooke';
-import toast from 'react-hot-toast';
+import { toastSuccess, toastError } from "../../../utils/func";
 
 
 export const fetchSignIn = () => {
@@ -21,19 +21,19 @@ export const fetchSignIn = () => {
                         setCookie('accessToken', accessToken, { path: '/' });
                         setCookie('refreshToken', refreshToken, { path: '/' });
 
-                        toast.success(`Добро пожаловать ${data.user.name}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}});
+                        toastSuccess(`Добро пожаловать ${data.user.name}`)
                         dispatch(actionSignIn.setStatusSignIn(data.user.name))
                     }else{
-                        toast.error(`Ошибка получения токена`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                        toastError(`Ошибка получения токена`)
                     }
 
                 } else {
-                    toast.error(`Ошибка входа ${data.message}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(`Ошибка входа ${data.message}`)
                     dispatch(actionSpinner.loading(false))
                 }
             })
             .catch((err) => {
-                toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                toastError(err.message)
                 dispatch(actionSpinner.loading(false))
             })
         

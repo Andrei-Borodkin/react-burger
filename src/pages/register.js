@@ -6,8 +6,8 @@ import { actionAutReg } from "../services/redux/actionCreators/actionAutReg"
 import { actionSpinner } from "../services/redux/actionCreators/actionSpinner"
 import { fetchRgistr } from "../services/redux/thunks/thunkReg"
 import { useNavigate, Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { autRegSelector } from '../services/redux/selectors/selectorsReg';
+import { toastError } from '../utils/func';
 
 const RegisterPage = () => {
 
@@ -23,7 +23,7 @@ const RegisterPage = () => {
     const onClick = (e) => {
         // пока только на пустоту        
         if (name !=='' && email !=='' && password !=='') dispatch( fetchRgistr() )
-            else  toast.error(`Поля формы не могут быть пустыми`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}})
+            else  toastError(`Поля формы не могут быть пустыми`)
     }
    
     useEffect(() => {

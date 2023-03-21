@@ -1,8 +1,8 @@
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionSignIn } from "../actionCreators/actionSignIn"
-import toast from 'react-hot-toast';
 import { getUser } from "../../../utils/auth-api";
 import { fetchRefToken } from "./thunkRefToken";
+import { toastError } from "../../../utils/func";
 
 
 export const fetchGetUser = () => {
@@ -16,7 +16,7 @@ export const fetchGetUser = () => {
                     dispatch(actionSignIn.setStatusSignInRef(data.user.name, data.user.email))
                     dispatch(actionSpinner.loading(false))
                 } else {
-                    toast.error(`Ошибка данных ${data.message}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(`Ошибка данных ${data.message}`)
                     dispatch(actionSpinner.loading(false))
                 }
             })
@@ -24,7 +24,7 @@ export const fetchGetUser = () => {
                 if (err.message === 'jwt expired') {
                     dispatch(fetchRefToken("err_getUser"))
                 }else{
-                    toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(err.message)
                     dispatch(actionSpinner.loading(false))
                 }
             })

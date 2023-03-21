@@ -1,8 +1,8 @@
 import { actionIngr } from "../actionCreators/actionIngr"
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { getIngr } from '../../../utils/burger-api';
-import toast from 'react-hot-toast';
 import { fetchRefToken } from "./thunkRefToken";
+import { toastError } from "../../../utils/func";
 
 export const fetchData = () => {
     return (dispatch, getState, extra) => {
@@ -16,7 +16,7 @@ export const fetchData = () => {
                     dispatch(actionSpinner.loading(false))
                 } else {
                     dispatch(actionIngr.setInitialState())
-                    toast.error('Полученные данные не корректны',  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}});
+                    toastError('Полученные данные не корректны')
                 }
             })
             .catch((err) => {
@@ -24,7 +24,7 @@ export const fetchData = () => {
                     dispatch(fetchRefToken("err_getIngr"))
                 }else{
                     dispatch(actionIngr.setInitialState())
-                    toast.error(err.message,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}});
+                    toastError(err.message)
                 }
             })
     }

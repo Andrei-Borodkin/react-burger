@@ -1,11 +1,11 @@
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { refToken } from '../../../utils/auth-api';
 import { getCookie, setCookie, deleteCookie } from '../../../utils/func-cooke';
-import toast from 'react-hot-toast';
 import { fetchData } from "./thunkIngr";
 import { fetchOrder } from "./thunkOrder";
 import { fetchGetUser } from "./thunkGetUser";
 import { fetchLogout } from "./thunkLogout";
+import { toastError } from "../../../utils/func";
 
 
 export const fetchRefToken = (err_func) => {
@@ -30,20 +30,20 @@ export const fetchRefToken = (err_func) => {
                     }else{
                         deleteCookie('accessToken')
                         deleteCookie('refreshToken')
-                        toast.error(`Ошибка обновления`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                        toastError(`Ошибка обновления`)
                     }
 
                 } else {
                     deleteCookie('accessToken')
                     deleteCookie('refreshToken')
-                    toast.error(`Ошибка аутентификации ${data.message}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    toastError(`Ошибка аутентификации ${data.message}`)
                     dispatch(actionSpinner.loading(false))
                 }
             })
             .catch((err) => {
                 deleteCookie('accessToken')
                 deleteCookie('refreshToken')
-                toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                toastError(err.message)
                 dispatch(actionSpinner.loading(false))
             })
         

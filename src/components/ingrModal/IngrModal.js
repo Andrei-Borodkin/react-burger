@@ -26,7 +26,7 @@ const IngrModal = ({ ipProps }) => {
     useEffect(() => {
         const accessToken = getCookie('accessToken')
         if (!accessToken) {
-            //toast.error('Только авторизованные пользователи могут просматривать ингредиенты', { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono' } });
+            //toastError('Только авторизованные пользователи могут просматривать ингредиенты')
             navigate('/login', { replace: true })
         }
         if (data && accessToken) {
