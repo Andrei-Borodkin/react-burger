@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 import { getCookie } from '../../utils/func-cooke';
 import { fetchData } from '../../services/redux/thunks/thunkIngr';
-import { actionSignIn } from '../../services/redux/actionCreators/actionSignIn';
 
 const BurgerIngredients = () => {
 
@@ -31,7 +30,6 @@ const BurgerIngredients = () => {
       const accessToken = getCookie('accessToken')
       if (accessToken) {
         dispatch(fetchData())
-        dispatch(actionSignIn.setStatusSignInRef(getCookie('name'), getCookie('email')))
       } else {
         navigate('/login', { replace: true })
       }

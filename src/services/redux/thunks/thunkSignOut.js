@@ -18,10 +18,8 @@ export const fetchSignIn = () => {
                     const refreshToken = data.refreshToken
 
                     if (accessToken && refreshToken) {
-                        setCookie('accessToken', accessToken);
-                        setCookie('refreshToken', refreshToken);
-                        setCookie('name', data.user.name);
-                        setCookie('email', data.user.email);
+                        setCookie('accessToken', accessToken, { path: '/' });
+                        setCookie('refreshToken', refreshToken, { path: '/' });
 
                         toast.success(`Добро пожаловать ${data.user.name}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}});
                         dispatch(actionSignIn.setStatusSignIn(data.user.name))

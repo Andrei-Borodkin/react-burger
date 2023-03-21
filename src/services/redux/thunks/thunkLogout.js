@@ -8,6 +8,7 @@ import { actionAutReg } from "../actionCreators/actionAutReg";
 import { actionForgResPas } from "../actionCreators/actionForgResPas";
 import { actionIngr } from "../actionCreators/actionIngr";
 import { actionOrder } from "../actionCreators/actionOrder";
+import { fetchRefToken } from "./thunkRefToken";
 
 
 export const fetchLogout = () => {
@@ -20,8 +21,6 @@ export const fetchLogout = () => {
                 if (data?.success) {
                     deleteCookie('accessToken')
                     deleteCookie('refreshToken')
-                    deleteCookie('name')
-                    deleteCookie('email')
 
                     dispatch(actionAutReg.setStatus(false))
                     dispatch(actionConstr.clearConstr())
@@ -30,14 +29,12 @@ export const fetchLogout = () => {
                     dispatch(actionOrder.setInitialState())
                     dispatch(actionSignIn.clSignIn())
                     dispatch(actionOrder.setInitialState())
-
+                    dispatch(actionSpinner.loading(false))
                     toast.success(`Успешный выход из системы`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'}});
 
                 } else {
                     deleteCookie('accessToken')
                     deleteCookie('refreshToken')
-                    deleteCookie('name')
-                    deleteCookie('email')
 
                     dispatch(actionAutReg.setStatus(false))
                     dispatch(actionConstr.clearConstr())
@@ -47,24 +44,28 @@ export const fetchLogout = () => {
                     dispatch(actionSignIn.clSignIn())
                     dispatch(actionOrder.setInitialState())
                     toast.error(`Выход с ошибкой ${data.message}`,  {duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
-                   // dispatch(actionSpinner.loading(false))
+                    dispatch(actionSpinner.loading(false))
                 }
             })
             .catch((err) => {
-                deleteCookie('accessToken')
-                deleteCookie('refreshToken')
-                deleteCookie('name')
-                deleteCookie('email')
 
-                dispatch(actionAutReg.setStatus(false))
-                dispatch(actionConstr.clearConstr())
-                dispatch(actionForgResPas.setInitialState())
-                dispatch(actionIngr.setInitialState())
-                dispatch(actionOrder.setInitialState())
-                dispatch(actionSignIn.clSignIn())
-                dispatch(actionOrder.setInitialState())
-                toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
-               // dispatch(actionSpinner.loading(false))
+                if (err.message === 'jwt expired') {
+                    dispatch(fetchRefToken("err_logout"))
+                }else{
+
+                    deleteCookie('accessToken')
+                    deleteCookie('refreshToken')
+
+                    dispatch(actionAutReg.setStatus(false))
+                    dispatch(actionConstr.clearConstr())
+                    dispatch(actionForgResPas.setInitialState())
+                    dispatch(actionIngr.setInitialState())
+                    dispatch(actionOrder.setInitialState())
+                    dispatch(actionSignIn.clSignIn())
+                    dispatch(actionOrder.setInitialState())
+                    toast.error(err.message, { duration: 4000, position: 'top-right', style: { background: 'black', color: 'white', border: '2px solid #4c4cff', fontfamily: 'JetBrains Mono'} });
+                    dispatch(actionSpinner.loading(false))
+                }
             })
         
     }

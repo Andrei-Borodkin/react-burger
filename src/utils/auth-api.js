@@ -74,3 +74,22 @@ export const logout  = () => {
     })
     .then(chekResp)
 }
+
+//GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
+export const getUser = () => {
+    return fetch(`${SERVER_URL}/auth/user`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + getCookie('accessToken')
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer'
+      })
+    .then(chekResp)
+}
+
+//PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.

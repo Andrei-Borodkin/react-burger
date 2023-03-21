@@ -1,7 +1,7 @@
 import React from 'react';
 import headerStyles from './header.module.css';
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const AppHeader = () => {
 
@@ -9,6 +9,8 @@ const AppHeader = () => {
   const onClickLogo = () => { navigate('/profile') }
   const onClickConstr = () => { navigate('/') }
   
+  let location = useLocation();
+
   return (
 
     <header className={headerStyles.header}>
@@ -17,9 +19,9 @@ const AppHeader = () => {
         <nav className={headerStyles.nav}>
           <div className={headerStyles.active} onClick={onClickConstr}>
             <div className={headerStyles.ico}>
-              <BurgerIcon type="primary" />
+              {location.pathname === '/' ? <BurgerIcon type="primary"/> : <BurgerIcon type="secondary"/> } 
             </div>
-            <span className={headerStyles.spanActiv}>
+            <span className={` ${headerStyles.span} ${location.pathname === '/' && headerStyles.spanActiv } `} >
               Конструктор
             </span>
           </div>
@@ -28,7 +30,7 @@ const AppHeader = () => {
             <div className={headerStyles.ico}>
               <ListIcon type="secondary" />
             </div>
-            <span className={headerStyles.span}>
+            <span className={headerStyles.span} >
               Лента заказов
             </span>
           </div>
@@ -36,14 +38,14 @@ const AppHeader = () => {
 
 
         <div className={headerStyles.logo}>
-          <Logo />
+          <Link to={{ pathname: `/` }} > <Logo /> </Link>
         </div>
 
-          <nav className={headerStyles.login} onClick={onClickLogo}>
+          <nav className={headerStyles.login} onClick={onClickLogo} >
             <div className={headerStyles.ico}>
-              <ProfileIcon type="secondary" />
+            {location.pathname === '/profile' ? <ProfileIcon type="primary"/> : <ProfileIcon type="secondary"/> } 
             </div>
-            <span className={headerStyles.span}>
+            <span  className={` ${headerStyles.span} ${location.pathname === '/profile' && headerStyles.spanActiv } `} >
               Личный кабинет
             </span>
           </nav>

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionForgResPas } from '../services/redux/actionCreators/actionForgResPas';
 import { rFRPSelector } from '../services/redux/selectors/selectorsForgResPas';
 import { fetchResPass } from '../services/redux/thunks/thunkResPass';
-import { loadingSelector } from '../services/redux/selectors/selectorsSpinner';
 import { actionSpinner } from '../services/redux/actionCreators/actionSpinner';
 
 
@@ -27,15 +26,15 @@ const ResetPage = () => {
 
     useEffect(() => {
         if (!status) navigate('/forgot-password', { replace: true })
+        if (statusRes) navigate('/login', { replace: true })
+        
         return () => {
-            console.log("setMail");
             if (statusRes) dispatch(actionForgResPas.setInitialState())
         }
-    }, [])
+    }, [statusRes, status])
     
     useEffect(() => {
         dispatch(actionSpinner.loading(false))
-        console.log("actionSpinner2");
     }, [dispatch])
 
     return (

@@ -10,7 +10,6 @@ import toast from 'react-hot-toast';
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
 import { rFRPEmailSelector } from '../services/redux/selectors/selectorsForgResPas';
 import { actionForgResPas } from '../services/redux/actionCreators/actionForgResPas';
-import { getCookie } from '../utils/func-cooke';
 
 const LoginPage = () => {
 
@@ -18,7 +17,6 @@ const LoginPage = () => {
     const { email, password, statusSign } = useSelector(rSignInSelector);
 
     const emailFRP = useSelector(rFRPEmailSelector);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -37,6 +35,7 @@ const LoginPage = () => {
 
     useEffect(() => {
 
+        dispatch(actionSpinner.loading(false))
         if (statusSign)  navigate('/', { replace: true })
         if (emailFRP) dispatch(actionForgResPas.setInitialState())
 

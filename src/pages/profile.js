@@ -4,35 +4,30 @@ import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-
 import { useDispatch, useSelector } from 'react-redux';
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
 import { actionSignIn } from '../services/redux/actionCreators/actionSignIn';
-import { getCookie } from '../utils/func-cooke';
 import { useNavigate } from 'react-router-dom';
 import { fetchLogout } from '../services/redux/thunks/thunkLogout';
-import { fetchData } from '../services/redux/thunks/thunkIngr';
-
-
+import { getCookie } from '../utils/func-cooke';
 
 const ProfilePage = () => {
 
-    const { email, name, statusSign } = useSelector(rSignInSelector);
+    const { email, name, password, statusSign } = useSelector(rSignInSelector);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (statusSign) {
-            dispatch(fetchData())
-          } else {
+        if (!statusSign) {
             const accessToken = getCookie('accessToken')
-            if (accessToken) {
-              dispatch(fetchData())
-              dispatch(actionSignIn.setStatusSignInRef(getCookie('name'), getCookie('email')))
-            } else {
-              navigate('/login', { replace: true })
+            if (!accessToken) {
+                navigate('/login', { replace: true })
             }
-          }
-      
-    }, [statusSign, dispatch, navigate])
+         }
+    }, [statusSign])
 
+
+    const onFormChange = (e) => {
+        dispatch(actionSignIn.setSignIn(e.target.name, e.target.value))
+    }
 
     const exitLogin = () => {
         dispatch(fetchLogout())
@@ -62,6 +57,7 @@ const ProfilePage = () => {
             <div className={profileStyles.edit}>
 
                 <EmailInput
+                    onChange={onFormChange}
                     value={name}
                     name={'name'}
                     placeholder="Имя"
@@ -70,6 +66,7 @@ const ProfilePage = () => {
                 />
 
                 <EmailInput
+                    onChange={onFormChange}
                     value={email}
                     name={'email'}
                     placeholder="Логин"
@@ -78,7 +75,8 @@ const ProfilePage = () => {
                 />
 
                 <PasswordInput
-                    value={'****'}
+                    onChange={onFormChange}
+                    value={password}
                     name={'password'}
                     icon={'EditIcon'}
                 />
