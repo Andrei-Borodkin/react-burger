@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import profileStyles from './profile.module.css';
-import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux';
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
 import { actionSignIn } from '../services/redux/actionCreators/actionSignIn';
 import { useNavigate } from 'react-router-dom';
 import { fetchLogout } from '../services/redux/thunks/thunkLogout';
 import { getCookie } from '../utils/func-cooke';
+import { fetchSignInNew } from '../services/redux/thunks/thunkSignNew';
 
 const ProfilePage = () => {
 
-    const { email, name, password, statusSign } = useSelector(rSignInSelector);
+    const { email, name, password, emailNew, nameNew, passwordNew, statusSign } = useSelector(rSignInSelector);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,17 +22,26 @@ const ProfilePage = () => {
             if (!accessToken) {
                 navigate('/login', { replace: true })
             }
-         }
+        }
     }, [statusSign])
 
 
     const onFormChange = (e) => {
-        dispatch(actionSignIn.setSignIn(e.target.name, e.target.value))
+        dispatch(actionSignIn.setSignInNew(e.target.name, e.target.value))
     }
 
     const exitLogin = () => {
         dispatch(fetchLogout())
     }
+    const onClickClear = () => {
+        dispatch(actionSignIn.clSignInNew())
+
+    }
+
+    const onClickSave = () => {
+        dispatch(fetchSignInNew())
+    }
+
 
     const color = window.location.pathname === "/profile" ? 'white' : '';
     return (
@@ -58,17 +68,18 @@ const ProfilePage = () => {
 
                 <EmailInput
                     onChange={onFormChange}
-                    value={name}
-                    name={'name'}
+                    value={nameNew || name}
+                    name={'nameNew'}
                     placeholder="Имя"
                     isIcon={true}
                     extraClass="mb-2"
+                    error={false}
                 />
 
                 <EmailInput
                     onChange={onFormChange}
-                    value={email}
-                    name={'email'}
+                    value={emailNew || email}
+                    name={'emailNew'}
                     placeholder="Логин"
                     isIcon={true}
                     extraClass="mb-2"
@@ -76,11 +87,25 @@ const ProfilePage = () => {
 
                 <PasswordInput
                     onChange={onFormChange}
-                    value={password}
-                    name={'password'}
+                    value={passwordNew || password}
+                    name={'passwordNew'}
                     icon={'EditIcon'}
                 />
+
+                {(nameNew || emailNew || passwordNew) &&
+                    <div>
+                        <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={onClickSave}>
+                            Сохранить
+                        </Button>
+                        <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={onClickClear}>
+                            Отменить
+                        </Button>
+                    </div>
+                }
+
             </div>
+
+
         </>
     )
 

@@ -1,8 +1,13 @@
-import { SET_SIGNIN, SET_SIGNIN_STATUS, SET_SIGNIN_STATUS_REF, CL_SIGNIN } from "../actionTypes/actionTypes";
+import { SET_SIGNIN, SET_SIGNIN_STATUS, SET_SIGNIN_STATUS_REF, CL_SIGNIN, SET_SIGNIN_NEW, CL_SIGNIN_NEW } from "../actionTypes/actionTypes";
 
 export const actionSignIn = {
   setSignIn: (field, value) => ({
     type: SET_SIGNIN,
+    field,
+    value
+  }),
+  setSignInNew: (field, value) => ({
+    type: SET_SIGNIN_NEW,
     field,
     value
   }),
@@ -20,4 +25,9 @@ export const actionSignIn = {
     type: CL_SIGNIN,
   }),
 
- }
+  clSignInNew: () => ({
+    type: CL_SIGNIN_NEW,
+  }),
+
+
+}

@@ -22,4 +22,7 @@ export const SET_FORGOT_PASSWORD = "SET_FORGOT_PASSWORD";
 export const SET_RESET_STATUS = "SET_RESET_STATUS";
 export const CL_RES_PASS = "CL_RES_PASS";
 export const CL_SIGNIN = "CL_SIGNIN";
+export const SET_SIGNIN_NEW = "SET_SIGNIN_NEW";
+export const CL_SIGNIN_NEW = "CL_SIGNIN_NEW";
+
 

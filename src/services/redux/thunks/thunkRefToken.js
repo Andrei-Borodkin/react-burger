@@ -6,6 +6,7 @@ import { fetchOrder } from "./thunkOrder";
 import { fetchGetUser } from "./thunkGetUser";
 import { fetchLogout } from "./thunkLogout";
 import { toastError } from "../../../utils/func";
+import { fetchSignInNew } from "./thunkSignNew";
 
 
 export const fetchRefToken = (err_func) => {
@@ -27,6 +28,7 @@ export const fetchRefToken = (err_func) => {
                         if (err_func === "err_getOrder" ) dispatch(fetchOrder())
                         if (err_func === "err_getUser" ) dispatch(fetchGetUser())
                         if (err_func === "err_logout" ) dispatch(fetchLogout())
+                        if (err_func === "err_profil" ) dispatch(fetchSignInNew())
                     }else{
                         deleteCookie('accessToken')
                         deleteCookie('refreshToken')

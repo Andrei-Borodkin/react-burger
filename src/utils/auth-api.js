@@ -93,3 +93,19 @@ export const getUser = () => {
 }
 
 //PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
+export const setUserData = (form) => {
+    return fetch(`${SERVER_URL}/auth/user`,  {
+        method: 'PATCH',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + getCookie('accessToken')
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(form)
+    })
+    .then(chekResp)
+}

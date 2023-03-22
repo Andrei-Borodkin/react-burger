@@ -2,14 +2,18 @@ import React from 'react';
 import headerStyles from './header.module.css';
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 
 const AppHeader = () => {
 
   const navigate = useNavigate();
-  const onClickLogo = () => { navigate('/profile') }
-  const onClickConstr = () => { navigate('/') }
+  const { statusSign } = useSelector(rSignInSelector);
+
+  const onClickLogo = () => { if (statusSign) navigate('/profile') }
+  const onClickConstr = () => { if (statusSign) navigate('/') }
   
-  let location = useLocation();
+  const location = useLocation();
 
   return (
 
