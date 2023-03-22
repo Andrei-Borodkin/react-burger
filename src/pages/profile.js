@@ -94,12 +94,13 @@ const ProfilePage = () => {
 
                 {(nameNew || emailNew || passwordNew) &&
                     <div>
+                        <Button htmlType="button" type="secondary" size="small" extraClass="ml-2" onClick={onClickClear}>
+                            Отмена
+                        </Button>
                         <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={onClickSave}>
                             Сохранить
                         </Button>
-                        <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={onClickClear}>
-                            Отменить
-                        </Button>
+
                     </div>
                 }
 
