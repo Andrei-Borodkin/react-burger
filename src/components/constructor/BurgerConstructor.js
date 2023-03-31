@@ -1,16 +1,14 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import ConstStyles from './burgerconst.module.css';
 import BurgerComponent from '../bcomponent/BurgerComponent';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/Modal';
 import { useDispatch, useSelector } from "react-redux";
 import { showSelector } from "../../services/redux/selectors/selectorsConstr";
-import { dataSelector } from "../../services/redux/selectors/selectorsIngr";
 import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 
 const BurgerConstructor = () => {
-
 
   const dispatch = useDispatch()
 

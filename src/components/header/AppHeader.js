@@ -1,49 +1,59 @@
 import React from 'react';
 import headerStyles from './header.module.css';
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 
 const AppHeader = () => {
+
+  const navigate = useNavigate();
+  const { statusSign } = useSelector(rSignInSelector);
+
+  const onClickLogo = () => { if (statusSign) navigate('/profile') }
+  const onClickConstr = () => { if (statusSign) navigate('/') }
+  
+  const location = useLocation();
+
   return (
 
     <header className={headerStyles.header}>
       <div className={headerStyles.content}>
 
         <nav className={headerStyles.nav}>
-          <a className={headerStyles.active}>
+          <div className={headerStyles.active} onClick={onClickConstr}>
             <div className={headerStyles.ico}>
-              <BurgerIcon type="primary" />
+              {location.pathname === '/' ? <BurgerIcon type="primary"/> : <BurgerIcon type="secondary"/> } 
             </div>
-            <span className={headerStyles.spanActiv}>
+            <span className={` ${headerStyles.span} ${location.pathname === '/' && headerStyles.spanActiv } `} >
               Конструктор
             </span>
-          </a>
+          </div>
 
-          <a className={headerStyles.inactive}>
+          <div className={headerStyles.inactive}>
             <div className={headerStyles.ico}>
               <ListIcon type="secondary" />
             </div>
-            <span className={headerStyles.span}>
+            <span className={headerStyles.span} >
               Лента заказов
             </span>
-          </a>
+          </div>
         </nav>
 
 
         <div className={headerStyles.logo}>
-          <Logo />
+          <Link to={{ pathname: `/` }} > <Logo /> </Link>
         </div>
 
-        <nav>
-          <a className={headerStyles.login} >
+          <nav className={headerStyles.login} onClick={onClickLogo} >
             <div className={headerStyles.ico}>
-              <ProfileIcon type="secondary" />
+            {location.pathname === '/profile' ? <ProfileIcon type="primary"/> : <ProfileIcon type="secondary"/> } 
             </div>
-            <span className={headerStyles.span}>
+            <span  className={` ${headerStyles.span} ${location.pathname === '/profile' && headerStyles.spanActiv } `} >
               Личный кабинет
             </span>
-          </a>
-        </nav>
+          </nav>
+        
 
       </div>
     </header>

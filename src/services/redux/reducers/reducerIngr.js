@@ -33,7 +33,7 @@ export const reducerIngr = (state = initialState, action) => {
       }
       case GET_INGR_FAILED:
         return {
-          state: initialState
+          ...initialState
         }
     default:
       return state;

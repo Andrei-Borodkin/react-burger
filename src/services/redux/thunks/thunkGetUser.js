@@ -1,32 +1,33 @@
-import { actionIngr } from "../actionCreators/actionIngr"
 import { actionSpinner } from "../actionCreators/actionSpinner"
-import { getIngr } from '../../../utils/burger-api';
+import { actionSignIn } from "../actionCreators/actionSignIn"
+import { getUser } from "../../../utils/auth-api";
 import { fetchRefToken } from "./thunkRefToken";
 import { toastError } from "../../../utils/func";
 
-export const fetchData = () => {
+
+export const fetchGetUser = () => {
     return (dispatch, getState, extra) => {
 
         dispatch(actionSpinner.loading(true))
 
-        getIngr()
+        getUser()
             .then((data) => {
-                if (data) {
-                    dispatch(actionIngr.setData(data))
+                if (data?.success) {
+                    dispatch(actionSignIn.setStatusSignInRef(data.user.name, data.user.email))
                     dispatch(actionSpinner.loading(false))
                 } else {
-                    dispatch(actionIngr.setInitialState())
-                    toastError('Полученные данные не корректны')
+                    toastError(`Ошибка данных ${data.message}`)
+                    dispatch(actionSpinner.loading(false))
                 }
             })
             .catch((err) => {
                 if (err.message === 'jwt expired') {
-                    dispatch(fetchRefToken("err_getIngr"))
+                    dispatch(fetchRefToken("err_getUser"))
                 }else{
-                    dispatch(actionIngr.setInitialState())
                     toastError(err.message)
+                    dispatch(actionSpinner.loading(false))
                 }
             })
+        
     }
 };
-
