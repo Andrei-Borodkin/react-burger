@@ -25,9 +25,11 @@ import { fetchGetUser } from '../../services/redux/thunks/thunkGetUser';
 const App = () => {
 
    const location = useLocation();
-   const dispatch = useDispatch()
+   const dispatch = useDispatch() as any
 
    const background = location.state && location.state.background;
+
+
    const ipProps = location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
 
    const isLoading = useSelector(loadingSelector)
@@ -60,7 +62,7 @@ const App = () => {
                   <Route path="*" element={<NotFound404 />} />
                   {background === "/" ?
                      <Route path='/ingredients/:id' element={<IngrModal />} />
-                     : <Route path='/ingredients/:id' element={<IngrModal ipProps={{ ipProps }} />} />
+                     : <Route path='/ingredients/:id' element={<IngrModal ipProps={ ipProps } />} />
                   }
 
                </Routes>

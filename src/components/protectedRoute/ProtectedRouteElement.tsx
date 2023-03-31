@@ -1,9 +1,15 @@
 
+import { FC, ReactElement } from 'react'
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 
-export const ProtectedRouteElement = ({ element, onlyUnAuth = false }) => {
+type TProtectedRouteElementProps = {
+    element: ReactElement;
+    onlyUnAuth: boolean;
+}
+
+export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ element, onlyUnAuth = false }) => {
 
     const { statusSign } = useSelector(rSignInSelector);
 

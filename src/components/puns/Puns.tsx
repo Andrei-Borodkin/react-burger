@@ -1,25 +1,38 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, FC} from 'react'
 import punsStyles from './puns.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
+import { TvalPunsProps } from "../../utils/types";
 
-const Puns = ({ valPuns }) => {
 
-    const dispatch = useDispatch()
+export type TvalPunsPropsComp= {
+    valPuns: TvalPunsProps;
+  }
+
+  export type TElement_id= {
+    _id: string;
+  }
+
+  export type TMasCount= {
+    [_id: string] : number;
+  }
+
+const Puns: FC<TvalPunsPropsComp> = ({ valPuns }) => {
+
+    const dispatch = useDispatch() as any
     const location = useLocation();
 
     const dataBun = useSelector(showIngrBun)
     const ingr = useSelector(showIngr)
 
     const colRemains = useMemo(() => {
-        const masCount = {}
+        const masCount: TMasCount = {}
         if (ingr.length > 0){
-            ingr.forEach(element => {
+            ingr.forEach((element: TElement_id) => {
                 if (!masCount[element._id]) masCount[element._id] = 0
                 masCount[element._id]++
             })
@@ -28,8 +41,8 @@ const Puns = ({ valPuns }) => {
         return masCount
 
     }, [ingr, dataBun])
-
-    const openAndGet = (id) => {
+    
+    const openAndGet = (id: string) => {
         dispatch(actionIngr.setShowIngr(true))
         dispatch(actionIngr.setIdMod(id))
     }
@@ -86,12 +99,3 @@ const Puns = ({ valPuns }) => {
   }
   
 export default React.memo(Puns)
-
-Puns.propTypes = {
-    valPuns: PropTypes.shape({ 
-        _id: PropTypes.string.isRequired, 
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired
-     }).isRequired
-};

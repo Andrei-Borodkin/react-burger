@@ -7,11 +7,11 @@ export const fetchRgistr = () => {
 
     return (dispatch, getState, extra) => {
 
-        const form = getState().autReg
+        const { email, password, name} = getState().autReg
 
         dispatch(actionSpinner.loading(true))
 
-        setRegisterData(form)
+        setRegisterData(email, password, name)
             .then((data) => {
                 if (data) {
                     toastSuccess('Пользователь зарегистрирован')

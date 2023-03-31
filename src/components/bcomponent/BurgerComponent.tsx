@@ -7,17 +7,19 @@ import { useDrop } from "react-dnd";
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr"
 import CompConstructorElement from '../compConstructorElement/CompConstructorElement'
 import img_dump from '../../images/bun-dump.png';
+import {TIngrBC, TmConstElement, TValPuns} from "../../utils/types"
+
 
 const BurgerComponent = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() as any
 
     const dataBun = useSelector(showIngrBun)
     const ingr = useSelector(showIngr)
-
+    
     const [{ isHover }, dropTarget] = useDrop({
         accept: "data",
-        drop(val) {
+        drop(val: TValPuns) {
             dispatch(actionConstr.addConstr(val.valPuns))
         },
         collect: monitor => ({
@@ -25,7 +27,7 @@ const BurgerComponent = () => {
         }),
     });
 
-    const mConstElement = useCallback((dragIndex, hoverIndex) => {
+    const mConstElement = useCallback<TmConstElement>((dragIndex, hoverIndex) => {
         const dragElem = ingr[dragIndex];
         const newElem = [...ingr]
         newElem.splice(dragIndex, 1)
@@ -56,7 +58,7 @@ const BurgerComponent = () => {
                                 type={"top"}
                                 isLocked={true}
                                 text="Булка не выбрана"
-                                price='0'
+                                price = {0}
                                 thumbnail={img_dump}
                             />
                         }
@@ -64,7 +66,7 @@ const BurgerComponent = () => {
 
                     {ingr.length > 0 ?
                         <section className={`${burCompStyles.sectionOver} mb-2`} >
-                            {ingr.map((val, index) => (
+                            {ingr.map((val: TIngrBC, index: number) => (
                                 <div key={val.id} >
                                     <CompConstructorElement val={val} index={index} mConstElement={mConstElement} />
                                 </div>
@@ -88,7 +90,7 @@ const BurgerComponent = () => {
                                 type={"bottom"}
                                 isLocked={true}
                                 text="Булка не выбрана"
-                                price='0'
+                                price= {0}
                                 thumbnail={img_dump}
                             />
                         }

@@ -8,11 +8,11 @@ import { showSelector } from "../../services/redux/selectors/selectorsConstr";
 import { orderSelector } from "../../services/redux/selectors/selectorsOrder";
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr";
 
-const modalDiv = document.getElementById("modals")
+const modalDiv = document.getElementById("modals")!
 
 const Modal = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() as any
 
     const isShow = useSelector(showSelector)
     const order = useSelector(orderSelector)
@@ -24,10 +24,10 @@ const Modal = () => {
 
     React.useEffect(() => {
         const modalDiv = document.getElementById("modalConst")
-        const ModalOverlay = (e) => { e.target === modalDiv && close() }
+        const ModalOverlay = (e: MouseEvent) => { e.target === modalDiv && close() }
         document.addEventListener("click", ModalOverlay)
     
-        const esc = (e) => { e.key === "Escape" && isShow && close() }
+        const esc = (e: KeyboardEvent) => { e.key === "Escape" && isShow && close() }
         document.addEventListener("keydown", esc)
         
         return () => {

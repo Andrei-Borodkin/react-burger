@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {ChangeEvent, useEffect} from 'react';
 import loginStyles from './login.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { actionSignIn } from "../services/redux/actionCreators/actionSignIn"
@@ -18,14 +18,14 @@ const LoginPage = () => {
     const { email, password, statusSign } = useSelector(rSignInSelector);
 
     const emailFRP = useSelector(rFRPEmailSelector);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actionSignIn.setSignIn(e.target.name, e.target.value))
     }
 
-    const onClick = (e) => {
+    const onClick = () => {
         // пока только на пустоту        
         if (email !== '' && password !== '') {
             dispatch(fetchSignIn())

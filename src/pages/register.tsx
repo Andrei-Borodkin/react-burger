@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {ChangeEvent, useEffect} from 'react';
 import registerStyles from './register.module.css';
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from "react-redux";
@@ -13,14 +13,14 @@ const RegisterPage = () => {
 
     const { name, email, password, statusReg } = useSelector(autRegSelector);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actionAutReg.setRegister(e.target.name, e.target.value))
     }
 
-    const onClick = (e) => {
+    const onClick = () => {
         // пока только на пустоту        
         if (name !=='' && email !=='' && password !=='') dispatch( fetchRgistr() )
             else  toastError(`Поля формы не могут быть пустыми`)

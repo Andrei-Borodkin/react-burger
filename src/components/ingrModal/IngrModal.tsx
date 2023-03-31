@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, FC } from 'react'
 import ReactDOM from 'react-dom'
 import moduleStyles from './ingrModal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -10,13 +10,19 @@ import { useNavigate } from 'react-router-dom';
 import { fetchData } from '../../services/redux/thunks/thunkIngr';
 import { getCookie } from '../../utils/func-cooke';
 import toast from 'react-hot-toast';
-import PropTypes from 'prop-types';
+import { T_Id } from '../../utils/types';
 
-const modalDiv = document.getElementById("modals")
 
-const IngrModal = ({ ipProps }) => {
 
-    const dispatch = useDispatch()
+const modalDiv = document.getElementById("modals")!
+
+type TIngrModalProps = {
+    ipProps?: string;
+}
+
+const IngrModal: FC<TIngrModalProps> = ({ ipProps }) => {
+
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
     const isShow = useSelector(showIngrSelector)
@@ -35,7 +41,7 @@ const IngrModal = ({ ipProps }) => {
     }, []);
 
 
-    const dataModul = data.filter((item) => item._id === id || ipProps )
+    const dataModul = data.filter((item: T_Id) => item._id === id || ipProps )
 
     const close = useCallback(() => {
         dispatch(actionIngr.setShowIngr(false))
@@ -44,10 +50,10 @@ const IngrModal = ({ ipProps }) => {
 
     useEffect(() => {
         const modalDiv = document.getElementById("modalIngr")
-        const ModalOverlay = (e) => { e.target === modalDiv && close() }
+        const ModalOverlay = (e: MouseEvent) => { e.target === modalDiv && close() }
         document.addEventListener("click", ModalOverlay)
 
-        const esc = (e) => { e.key === "Escape" && isShow && close() }
+        const esc = (e: KeyboardEvent) => { e.key === "Escape" && isShow && close() }
         document.addEventListener("keydown", esc)
 
         return () => {
@@ -105,7 +111,3 @@ const IngrModal = ({ ipProps }) => {
 }
 
 export default React.memo(IngrModal);
-
-IngrModal.propTypes = {
-    ipProps: PropTypes.any
-};

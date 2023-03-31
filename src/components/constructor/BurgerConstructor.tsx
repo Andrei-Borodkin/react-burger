@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { showSelector } from "../../services/redux/selectors/selectorsConstr";
 import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
+import { TPrice, T_Id } from "../../utils/types";
+
 
 const BurgerConstructor = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() as any
 
   const isShow = useSelector(showSelector)
 
@@ -19,7 +21,7 @@ const BurgerConstructor = () => {
 
   const openModal = () => { 
     if (dataBun && ingr.length > 0) {
-      const idInger2 = [dataBun._id, ...ingr.map(item => item._id), dataBun._id]
+      const idInger2 = [dataBun._id, ...ingr.map((item: T_Id) => item._id), dataBun._id]
       dispatch( fetchOrder(idInger2) )
     }else{
       alert("Соберите заказ")
@@ -27,7 +29,7 @@ const BurgerConstructor = () => {
   }
   
   const summIng = useMemo(() =>
-    ingr.length > 0 ? (ingr.reduce((rez, arr) => { return rez + arr.price }, 0) + (dataBun ? dataBun.price * 2 : 0)) : 0
+    ingr.length > 0 ? (ingr.reduce((rez: number, arr: TPrice) => { return rez + arr.price }, 0) + (dataBun ? dataBun.price * 2 : 0)) : 0
     , [ingr, dataBun])
 
   return (

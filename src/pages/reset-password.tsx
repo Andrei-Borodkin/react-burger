@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {ChangeEvent, useEffect} from 'react';
 import resetStyles from './reset.module.css';
 import {  PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,12 +11,12 @@ import { actionSpinner } from '../services/redux/actionCreators/actionSpinner';
 
 const ResetPage = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
     const { password, kod, status, statusRes } = useSelector(rFRPSelector);
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actionForgResPas.setPassword(e.target.name, e.target.value))
     }
 

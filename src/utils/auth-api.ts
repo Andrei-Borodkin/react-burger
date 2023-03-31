@@ -1,17 +1,24 @@
 import { getCookie } from "./func-cooke"
+import { TForm } from "./types"
 
 const SERVER_URL = "https://norma.nomoreparties.space/api"
 
-const chekResp = (res) => {
+const chekResp = (res: Response ) => {
     return res.ok ? res.json() : res.json().then((message) => Promise.reject(message))
 }
 
+
 //https://norma.nomoreparties.space/api/auth/register
-export const setRegisterData = (form) => {
+export const setRegisterData = (email: string, password: string, name: string) => {
+
     return fetch(`${SERVER_URL}/auth/register`,  {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
-        body: JSON.stringify(form)
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            name: name
+        })
         
     })
     .then(chekResp)
@@ -22,7 +29,7 @@ export const setRegisterData = (form) => {
 }
 
 //POST https://norma.nomoreparties.space/api/auth/login 
-export const loginRequest = (email, password) => {
+export const loginRequest = (email: string, password: string) => {
     return fetch(`${SERVER_URL}/auth/login`,  {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
@@ -35,7 +42,7 @@ export const loginRequest = (email, password) => {
 }
 
 //POST https://norma.nomoreparties.space/api/auth/token 
-export const refToken = (refreshToken) => {
+export const refToken = (refreshToken: string) => {
     return fetch(`${SERVER_URL}/auth/token`,  {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
@@ -45,7 +52,7 @@ export const refToken = (refreshToken) => {
 }
 
 //POST https://norma.nomoreparties.space/api/password-reset.
-export const forgotPass = (email) => {
+export const forgotPass = (email: string) => {
     return fetch(`${SERVER_URL}/password-reset`,  {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
@@ -56,7 +63,7 @@ export const forgotPass = (email) => {
 
 //https://norma.nomoreparties.space/api/password-reset/reset.
 // для начала посмотреть что выдает forgotPass
-export const resetPass = (password, kod) => {
+export const resetPass = (password: string, kod: string) => {
     return fetch(`${SERVER_URL}/password-reset/reset`,  {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
@@ -92,8 +99,9 @@ export const getUser = () => {
     .then(chekResp)
 }
 
+
 //PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
-export const setUserData = (form) => {
+export const setUserData = (form: TForm) => {
     return fetch(`${SERVER_URL}/auth/user`,  {
         method: 'PATCH',
         mode: 'cors',
