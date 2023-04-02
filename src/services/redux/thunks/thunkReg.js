@@ -12,14 +12,9 @@ export const fetchRgistr = () => {
         dispatch(actionSpinner.loading(true))
 
         setRegisterData(email, password, name)
-            .then((data) => {
-                if (data) {
-                    toastSuccess('Пользователь зарегистрирован')
-                    dispatch(actionAutReg.setStatus(true))
-                } else {
-                    toastError('Ошибка получения данных')
-                    dispatch(actionSpinner.loading(false))
-                }
+            .then(() => {
+                toastSuccess('Пользователь зарегистрирован')
+                dispatch(actionAutReg.setStatus(true))
             })
             .catch((err) => {
                 toastError(err.message)

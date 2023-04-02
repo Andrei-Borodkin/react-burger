@@ -1,7 +1,7 @@
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionSignIn } from "../actionCreators/actionSignIn"
 import { logout } from '../../../utils/auth-api';
-import {  deleteCookie } from '../../../utils/func-cooke';
+import { deleteCookie } from '../../../utils/func-cooke';
 import { actionConstr } from "../actionCreators/actionConstr";
 import { actionAutReg } from "../actionCreators/actionAutReg";
 import { actionForgResPas } from "../actionCreators/actionForgResPas";
@@ -17,41 +17,28 @@ export const fetchLogout = () => {
         dispatch(actionSpinner.loading(true))
 
         logout()
-            .then((data) => {
-                if (data?.success) {
-                    deleteCookie('accessToken')
-                    deleteCookie('refreshToken')
+            .then(() => {
 
-                    dispatch(actionAutReg.setStatus(false))
-                    dispatch(actionConstr.clearConstr())
-                    dispatch(actionForgResPas.setInitialState())
-                    dispatch(actionIngr.setInitialState())
-                    dispatch(actionOrder.setInitialState())
-                    dispatch(actionSignIn.clSignIn())
-                    dispatch(actionOrder.setInitialState())
-                    dispatch(actionSpinner.loading(false))
-                    toastSuccess(`Успешный выход из системы`)
+                deleteCookie('accessToken')
+                deleteCookie('refreshToken')
 
-                } else {
-                    deleteCookie('accessToken')
-                    deleteCookie('refreshToken')
+                dispatch(actionAutReg.setStatus(false))
+                dispatch(actionConstr.clearConstr())
+                dispatch(actionForgResPas.setInitialState())
+                dispatch(actionIngr.setInitialState())
+                dispatch(actionOrder.setInitialState())
+                dispatch(actionSignIn.clSignIn())
+                dispatch(actionOrder.setInitialState())
+                dispatch(actionSpinner.loading(false))
+                toastSuccess(`Успешный выход из системы`)
 
-                    dispatch(actionAutReg.setStatus(false))
-                    dispatch(actionConstr.clearConstr())
-                    dispatch(actionForgResPas.setInitialState())
-                    dispatch(actionIngr.setInitialState())
-                    dispatch(actionOrder.setInitialState())
-                    dispatch(actionSignIn.clSignIn())
-                    dispatch(actionOrder.setInitialState())
-                    toastError(`Выход с ошибкой ${data.message}`)
-                    dispatch(actionSpinner.loading(false))
-                }
+
             })
             .catch((err) => {
 
                 if (err.message === 'jwt expired') {
                     dispatch(fetchRefToken("err_logout"))
-                }else{
+                } else {
 
                     deleteCookie('accessToken')
                     deleteCookie('refreshToken')
@@ -67,6 +54,6 @@ export const fetchLogout = () => {
                     dispatch(actionSpinner.loading(false))
                 }
             })
-        
+
     }
 };

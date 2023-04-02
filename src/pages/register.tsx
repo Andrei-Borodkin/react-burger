@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent, useEffect, FormEvent} from 'react';
 import registerStyles from './register.module.css';
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from "react-redux";
@@ -20,8 +20,9 @@ const RegisterPage = () => {
         dispatch(actionAutReg.setRegister(e.target.name, e.target.value))
     }
 
-    const onClick = () => {
-        // пока только на пустоту        
+    const onSubmit = (e: FormEvent) => {
+        // пока только на пустоту     
+        e.preventDefault()   
         if (name !=='' && email !=='' && password !=='') dispatch( fetchRgistr() )
             else  toastError(`Поля формы не могут быть пустыми`)
     }
@@ -36,7 +37,7 @@ const RegisterPage = () => {
 
     return (
         <div className={registerStyles.content}>
-            <form>
+            <form onSubmit={onSubmit}>
                 <div className={registerStyles.edit}>
                     <div className={registerStyles.frame}>
                         <span>Регистрация</span>
@@ -66,7 +67,7 @@ const RegisterPage = () => {
 
 
                     <div className={registerStyles.but}>
-                        <Button htmlType="button" type="primary" size="medium" onClick={onClick}>
+                        <Button htmlType="submit" type="primary" size="medium" >
                             Зарегистрироваться
                         </Button>
                     </div>

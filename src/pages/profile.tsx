@@ -20,7 +20,8 @@ const ProfilePage = () => {
         if (!statusSign) {
             const accessToken = getCookie('accessToken')
             if (!accessToken) {
-                navigate('/login', { replace: true })
+                //navigate('/login', { replace: true })
+                navigate('/login')
             }
         }
     }, [statusSign])

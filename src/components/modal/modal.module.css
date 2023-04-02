@@ -1,5 +1,5 @@
 .wrapper {
-    position: absolute;
+    position: fixed;
     width: 720px;
     height: 718px;
     margin-left: auto;

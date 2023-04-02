@@ -13,24 +13,20 @@ export const fetchSignIn = () => {
 
         loginRequest(email, password)
             .then((data) => {
-                if (data?.success) {
-                    const accessToken = data.accessToken.split('Bearer ')[1];
-                    const refreshToken = data.refreshToken
 
-                    if (accessToken && refreshToken) {
-                        setCookie('accessToken', accessToken, { path: '/' });
-                        setCookie('refreshToken', refreshToken, { path: '/' });
+                const accessToken = data.accessToken.split('Bearer ')[1];
+                const refreshToken = data.refreshToken
 
-                        toastSuccess(`Добро пожаловать ${data.user.name}`)
-                        dispatch(actionSignIn.setStatusSignIn(data.user.name))
-                    }else{
-                        toastError(`Ошибка получения токена`)
-                    }
+                if (accessToken && refreshToken) {
+                    setCookie('accessToken', accessToken, { path: '/' });
+                    setCookie('refreshToken', refreshToken, { path: '/' });
 
-                } else {
-                    toastError(`Ошибка входа ${data.message}`)
-                    dispatch(actionSpinner.loading(false))
+                    toastSuccess(`Добро пожаловать ${data.user.name}`)
+                    dispatch(actionSignIn.setStatusSignIn(data.user.name))
+                }else{
+                    toastError(`Ошибка получения токена`)
                 }
+
             })
             .catch((err) => {
                 toastError(err.message)

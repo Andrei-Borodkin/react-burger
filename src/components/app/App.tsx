@@ -21,6 +21,9 @@ import { ProtectedRouteElement } from '../protectedRoute/ProtectedRouteElement';
 import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 import { getCookie } from '../../utils/func-cooke';
 import { fetchGetUser } from '../../services/redux/thunks/thunkGetUser';
+import { showIngrSelector } from '../../services/redux/selectors/selectorsIngr';
+import { showSelector } from '../../services/redux/selectors/selectorsConstr';
+import { actionIngr } from '../../services/redux/actionCreators/actionIngr';
 
 const App = () => {
 
@@ -29,18 +32,25 @@ const App = () => {
 
    const background = location.state && location.state.background;
 
-
    const ipProps = location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
 
    const isLoading = useSelector(loadingSelector)
    const { statusSign } = useSelector(rSignInSelector);
 
+   //const isShowIngr = useSelector(showIngrSelector)
+   //const isShow = useSelector(showSelector)
+   
+ 
    useEffect(() => {
       if (!statusSign) {
          const accessToken = getCookie('accessToken')
          if (accessToken) {
             dispatch(fetchGetUser())
          }
+      }
+
+      if (background === "/") {
+         dispatch(actionIngr.setShowIngrID(true, ipProps))
       }
    }, [])
 

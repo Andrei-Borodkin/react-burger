@@ -1,7 +1,7 @@
 
 import { FC, ReactElement } from 'react'
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 
 type TProtectedRouteElementProps = {
@@ -12,19 +12,18 @@ type TProtectedRouteElementProps = {
 export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ element, onlyUnAuth = false }) => {
 
     const { statusSign } = useSelector(rSignInSelector);
+    const location = useLocation();
 
     if (onlyUnAuth && statusSign) {
-        //const { from } = location.state || { from: { pathname: "/" } };
+        const { from } = location.state || { from: { pathname: "/" } };
         return (
-            // <Navigate to={from} />
-            <Navigate to="/" replace />
+            <Navigate to={from} />
         )
     }
 
     if (!onlyUnAuth && !statusSign ) {
         return ( 
-            <Navigate to="/login" replace />  
-            //<Navigate to={{ pathname: "/login", state: { from: location } }} />
+            <Navigate to="/login" state={{ from: location}}/>
         );
     }
     

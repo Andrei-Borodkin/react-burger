@@ -13,7 +13,6 @@ import toast from 'react-hot-toast';
 import { T_Id } from '../../utils/types';
 
 
-
 const modalDiv = document.getElementById("modals")!
 
 type TIngrModalProps = {
@@ -52,7 +51,7 @@ const IngrModal: FC<TIngrModalProps> = ({ ipProps }) => {
         const modalDiv = document.getElementById("modalIngr")
         const ModalOverlay = (e: MouseEvent) => { e.target === modalDiv && close() }
         document.addEventListener("click", ModalOverlay)
-
+        
         const esc = (e: KeyboardEvent) => { e.key === "Escape" && isShow && close() }
         document.addEventListener("keydown", esc)
 
@@ -60,7 +59,7 @@ const IngrModal: FC<TIngrModalProps> = ({ ipProps }) => {
             document.removeEventListener("click", ModalOverlay)
             document.removeEventListener("keydown", esc)
         }
-    }, [isShow, close]);
+    }, []);
 
     return ReactDOM.createPortal(
         <>
@@ -101,10 +100,10 @@ const IngrModal: FC<TIngrModalProps> = ({ ipProps }) => {
                                 </div>
                             </section>
                         </div>
-                    </div><ModalOverlay id="modalIngr" />
+                    </div>
                 </>
             }
-            
+            <ModalOverlay id="modalIngr" />
         </>,
         modalDiv
     )

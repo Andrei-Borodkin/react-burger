@@ -10,14 +10,9 @@ export const fetchResPass = (password, kod) => {
         dispatch(actionSpinner.loading(true))
 
         resetPass(password, kod)
-            .then((data) => {
-                if (data?.success) {
-                    dispatch(actionForgResPas.setStatusRes(true))
-                    toastSuccess("Пароль успешно изменен")
-                } else {
-                    toastError(data.message)
-                    dispatch(actionSpinner.loading(false))
-                }
+            .then(() => {
+                dispatch(actionForgResPas.setStatusRes(true))
+                toastSuccess("Пароль успешно изменен")
             })
             .catch((err) => {
                 toastError(err.message)
