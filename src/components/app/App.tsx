@@ -16,14 +16,11 @@ import ResetPage from '../../pages/reset-password';
 import ProfilePage from '../../pages/profile';
 import NotFound404 from '../../pages/not-found';
 import { Toaster } from 'react-hot-toast';
-import IngrModal from '../ingrModal/IngrModal';
 import { ProtectedRouteElement } from '../protectedRoute/ProtectedRouteElement';
-import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
-import { getCookie } from '../../utils/func-cooke';
-import { fetchGetUser } from '../../services/redux/thunks/thunkGetUser';
-import { showIngrSelector } from '../../services/redux/selectors/selectorsIngr';
-import { showSelector } from '../../services/redux/selectors/selectorsConstr';
 import { actionIngr } from '../../services/redux/actionCreators/actionIngr';
+import { fetchData } from '../../services/redux/thunks/thunkIngr';
+import Modal from '../modal/Modal';
+import IngrDetail from '../ingrDetail/IngrDetail';
 
 const App = () => {
 
@@ -32,27 +29,18 @@ const App = () => {
 
    const background = location.state && location.state.background;
 
-   const ipProps = location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
+   const id = location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
 
    const isLoading = useSelector(loadingSelector)
-   const { statusSign } = useSelector(rSignInSelector);
-
-   //const isShowIngr = useSelector(showIngrSelector)
-   //const isShow = useSelector(showSelector)
    
- 
    useEffect(() => {
-      if (!statusSign) {
-         const accessToken = getCookie('accessToken')
-         if (accessToken) {
-            dispatch(fetchGetUser())
-         }
-      }
+    
+        dispatch(fetchData())
 
-      if (background === "/") {
-         dispatch(actionIngr.setShowIngrID(true, ipProps))
+        if (background === "/") {
+         dispatch(actionIngr.setShowIngrID(true, id))
       }
-   }, [])
+    }, [])
 
 
    return (
@@ -71,8 +59,8 @@ const App = () => {
                   <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPage />} onlyUnAuth />} />
                   <Route path="*" element={<NotFound404 />} />
                   {background === "/" ?
-                     <Route path='/ingredients/:id' element={<IngrModal />} />
-                     : <Route path='/ingredients/:id' element={<IngrModal ipProps={ ipProps } />} />
+                     <Route path='/ingredients/:id' element={<Modal> <IngrDetail /></Modal>} />
+                     : <Route path='/ingredients/:id' element={ <IngrDetail idProps={ id } /> } />
                   }
 
                </Routes>

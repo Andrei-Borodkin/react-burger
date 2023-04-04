@@ -3,15 +3,12 @@ import { useInView } from 'react-intersection-observer';
 import IngrStyles from './ingredients.module.css';
 import TabComp from '../tab/TabComp';
 import Puns from '../puns/Puns';
-import IngrModal from '../ingrModal/IngrModal';
 import { useSelector, useDispatch } from "react-redux";
 import { dataSelector,  showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
-import { useNavigate } from 'react-router-dom';
-import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
-import { getCookie } from '../../utils/func-cooke';
-import { fetchData } from '../../services/redux/thunks/thunkIngr';
 import { TValType, TvalPunsProps } from '../../utils/types';
+import Modal from '../modal/Modal';
+import IngrDetail from '../ingrDetail/IngrDetail';
 
 
 type ValueType = 'main' | 'bun' | 'sauce';
@@ -21,26 +18,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch() as any
   const data = useSelector(dataSelector)
   const isShow = useSelector(showIngrSelector)
-  
-  const navigate = useNavigate();
-  const { statusSign } = useSelector(rSignInSelector);
-
-  useEffect(() => {
-
-    if (statusSign) {
-      dispatch(fetchData())
-    } else {
-
-      const accessToken = getCookie('accessToken')
-      if (accessToken) {
-        dispatch(fetchData())
-      } else {
-        navigate('/login', { replace: true })
-      }
-    }
-
-  }, [])
-
+ 
   const bType = data.map((val: TValType) => val.type).filter((item: string, index: number, arr: string) => {
     return arr.indexOf(item) === index;
   });
@@ -96,7 +74,7 @@ const BurgerIngredients = () => {
 
       {isShow && (
         <div>
-          <IngrModal />
+          <Modal> <IngrDetail /></Modal>
         </div>
       )}
 

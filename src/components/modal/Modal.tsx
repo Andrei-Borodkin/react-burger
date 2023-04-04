@@ -1,29 +1,42 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, ReactNode, FC} from 'react'
 import ReactDOM from 'react-dom'
 import moduleStyles from './modal.module.css';
-import { CloseIcon, CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import ModalOverlay from '../modal-overlay/ModalOverlay';
 import { useDispatch, useSelector } from "react-redux";
 import { showSelector } from "../../services/redux/selectors/selectorsConstr";
-import { orderSelector } from "../../services/redux/selectors/selectorsOrder";
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr";
+import { showIngrSelector } from '../../services/redux/selectors/selectorsIngr';
+import { actionIngr } from '../../services/redux/actionCreators/actionIngr';
+import { useNavigate } from 'react-router-dom';
 
 const modalDiv = document.getElementById("modals")!
 
-const Modal = () => {
-
+type ModalProps = {
+    children?: ReactNode
+}
+    
+const Modal: FC<ModalProps> = ({ children }) => {
+  
     const dispatch = useDispatch() as any
+    const navigate = useNavigate();
 
     const isShow = useSelector(showSelector)
-    const order = useSelector(orderSelector)
+    const isShowIngr = useSelector(showIngrSelector)
 
     const close = useCallback(() => { 
-        dispatch(actionConstr.setShow(false)) 
-        dispatch(actionConstr.clearConstr())
+
+        if (isShowIngr){
+            dispatch(actionIngr.setShowIngr(false))
+            navigate(-1);
+        } else{
+            dispatch(actionConstr.setShow(false)) 
+            dispatch(actionConstr.clearConstr())
+        }
     }, [dispatch])
 
     React.useEffect(() => {
-        const modalDiv = document.getElementById("modalConst")
+        const modalDiv = document.getElementById("modal")
         const ModalOverlay = (e: MouseEvent) => { e.target === modalDiv && close() }
         document.addEventListener("click", ModalOverlay)
     
@@ -45,33 +58,10 @@ const Modal = () => {
                     <div className={moduleStyles.header}>
                         <span onClick={close}> <CloseIcon type="primary" /></span>
                     </div>
-
-                    <h1 className={moduleStyles.number}>
-                        <span className={moduleStyles.numberSpan}>{order}</span>
-                    </h1>
-
-                    <p className={moduleStyles.id}>
-                        <span className={moduleStyles.idSpan}>идентификатор заказа</span>
-                    </p>
-
-                    <div className={moduleStyles.done}>
-                        <div className={moduleStyles.ico}><CheckMarkIcon type="primary" /></div>
-                        <div className={moduleStyles.vector1}></div>
-                        <div className={moduleStyles.vector2}></div>
-                        <div className={moduleStyles.vector3}></div>                        
-                    </div>
-
-                    <p className={moduleStyles.go}>
-                        <span className={moduleStyles.goSpan}>Ваш заказ начали готовить</span>
-                    </p>
-
-                    <p className={moduleStyles.redy}>
-                        <span className={moduleStyles.redySpan}>Дождитесь готовности на орбитальной станции</span>
-                    </p>
-
+                    <>{children}</>
                 </div>
             </div>
-            <ModalOverlay id="modalConst"/>
+            <ModalOverlay id="modal"/>
             </>,
         modalDiv
     )

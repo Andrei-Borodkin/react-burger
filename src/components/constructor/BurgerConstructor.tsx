@@ -8,6 +8,7 @@ import { showSelector } from "../../services/redux/selectors/selectorsConstr";
 import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 import { TPrice, T_Id } from "../../utils/types";
+import  OrderDetail  from "../../components/orderDetail/OrderDetail";
 
 
 const BurgerConstructor = () => {
@@ -49,7 +50,9 @@ const BurgerConstructor = () => {
 
       {isShow &&
         <div>
-          <Modal />
+          <Modal >
+            <OrderDetail />
+          </Modal>
         </div>
       }
     </main>
