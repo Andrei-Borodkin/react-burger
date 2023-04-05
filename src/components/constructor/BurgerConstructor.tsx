@@ -1,34 +1,52 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import ConstStyles from './burgerconst.module.css';
 import BurgerComponent from '../bcomponent/BurgerComponent';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/Modal';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { showSelector } from "../../services/redux/selectors/selectorsConstr";
 import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 import { TPrice, T_Id } from "../../utils/types";
 import  OrderDetail  from "../../components/orderDetail/OrderDetail";
+import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
+import { toastError } from '../../utils/func';
+import { actionConstr } from '../../services/redux/actionCreators/actionConstr';
 
 
 const BurgerConstructor = () => {
 
   const dispatch = useDispatch() as any
+  const navigate = useNavigate();
 
   const isShow = useSelector(showSelector)
+  const { statusSign } = useSelector(rSignInSelector);
 
   const dataBun = useSelector(showIngrBun)
   const ingr = useSelector(showIngr)
 
   const openModal = () => { 
-    if (dataBun && ingr.length > 0) {
-      const idInger2 = [dataBun._id, ...ingr.map((item: T_Id) => item._id), dataBun._id]
-      dispatch( fetchOrder(idInger2) )
+
+    if (statusSign){
+      if (dataBun && ingr.length > 0) {
+        const idInger2 = [dataBun._id, ...ingr.map((item: T_Id) => item._id), dataBun._id]
+        dispatch( fetchOrder(idInger2) )
+      }else{
+        alert("Соберите заказ")
+      }
     }else{
-      alert("Соберите заказ")
+      toastError(`Только авторизованные пользователи могут оформить заказ`)
+      navigate('/login')
     }
   }
   
+  const close = useCallback(() => { 
+        dispatch(actionConstr.setShow(false)) 
+        dispatch(actionConstr.clearConstr())
+    
+}, [dispatch])
+
   const summIng = useMemo(() =>
     ingr.length > 0 ? (ingr.reduce((rez: number, arr: TPrice) => { return rez + arr.price }, 0) + (dataBun ? dataBun.price * 2 : 0)) : 0
     , [ingr, dataBun])
@@ -50,7 +68,7 @@ const BurgerConstructor = () => {
 
       {isShow &&
         <div>
-          <Modal >
+          <Modal close= { close }>
             <OrderDetail />
           </Modal>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import appStyles from './app.module.css';
 import AppHeader from '../header/AppHeader';
 import BurgerIngredients from '../Ingredients/BurgerIngredients';
@@ -21,26 +21,42 @@ import { actionIngr } from '../../services/redux/actionCreators/actionIngr';
 import { fetchData } from '../../services/redux/thunks/thunkIngr';
 import Modal from '../modal/Modal';
 import IngrDetail from '../ingrDetail/IngrDetail';
+import { useNavigate } from 'react-router-dom';
+import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
+import { getCookie } from '../../utils/func-cooke';
+import { fetchGetUser } from '../../services/redux/thunks/thunkGetUser';
 
 const App = () => {
 
    const location = useLocation();
    const dispatch = useDispatch() as any
+   const navigate = useNavigate();
 
    const background = location.state && location.state.background;
-
    const id = location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
-
    const isLoading = useSelector(loadingSelector)
-   
-   useEffect(() => {
-    
-        dispatch(fetchData())
+   const { statusSign } = useSelector(rSignInSelector);
 
-        if (background === "/") {
+   const close = useCallback(() => {
+      dispatch(actionIngr.setShowIngr(false))
+      navigate(-1);
+   }, [dispatch])
+
+   useEffect(() => {
+
+      dispatch(fetchData())
+
+      if (!statusSign) {
+         const accessToken = getCookie('accessToken')
+         if (accessToken) {
+            dispatch(fetchGetUser())
+         }
+      }
+
+      if (background === "/") {
          dispatch(actionIngr.setShowIngrID(true, id))
       }
-    }, [])
+   }, [])
 
 
    return (
@@ -51,16 +67,16 @@ const App = () => {
          <>
             <DndProvider backend={HTML5Backend}>
                <Routes location={background || location}>
-                  <Route path="/" element={[<BurgerIngredients key="BurgerIngredients" />, <BurgerConstructor key="BurgerConstructor" />]}  />
-                  <Route path="/profile" element={<ProfilePage />}  />
+                  <Route path="/" element={[<BurgerIngredients key="BurgerIngredients" />, <BurgerConstructor key="BurgerConstructor" />]} />
+                  <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/login" element={<ProtectedRouteElement element={<LoginPage />} onlyUnAuth />} />
                   <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} onlyUnAuth />} />
                   <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPage />} onlyUnAuth />} />
                   <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPage />} onlyUnAuth />} />
                   <Route path="*" element={<NotFound404 />} />
                   {background === "/" ?
-                     <Route path='/ingredients/:id' element={<Modal> <IngrDetail /></Modal>} />
-                     : <Route path='/ingredients/:id' element={ <IngrDetail idProps={ id } /> } />
+                     <Route path='/ingredients/:id' element={<Modal close={close}> <IngrDetail /></Modal>} />
+                     : <Route path='/ingredients/:id' element={<IngrDetail idProps={id} />} />
                   }
 
                </Routes>

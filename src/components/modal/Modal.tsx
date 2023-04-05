@@ -1,53 +1,31 @@
-import React, {useCallback, ReactNode, FC} from 'react'
+import React, { ReactNode, FC } from 'react'
 import ReactDOM from 'react-dom'
 import moduleStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import ModalOverlay from '../modal-overlay/ModalOverlay';
-import { useDispatch, useSelector } from "react-redux";
-import { showSelector } from "../../services/redux/selectors/selectorsConstr";
-import { actionConstr } from "../../services/redux/actionCreators/actionConstr";
-import { showIngrSelector } from '../../services/redux/selectors/selectorsIngr';
-import { actionIngr } from '../../services/redux/actionCreators/actionIngr';
-import { useNavigate } from 'react-router-dom';
 
 const modalDiv = document.getElementById("modals")!
 
 type ModalProps = {
-    children?: ReactNode
+    children?: ReactNode;
+    close: () => void;
 }
     
-const Modal: FC<ModalProps> = ({ children }) => {
+const Modal: FC<ModalProps> = ({ children, close }) => {
   
-    const dispatch = useDispatch() as any
-    const navigate = useNavigate();
-
-    const isShow = useSelector(showSelector)
-    const isShowIngr = useSelector(showIngrSelector)
-
-    const close = useCallback(() => { 
-
-        if (isShowIngr){
-            dispatch(actionIngr.setShowIngr(false))
-            navigate(-1);
-        } else{
-            dispatch(actionConstr.setShow(false)) 
-            dispatch(actionConstr.clearConstr())
-        }
-    }, [dispatch])
-
     React.useEffect(() => {
         const modalDiv = document.getElementById("modal")
         const ModalOverlay = (e: MouseEvent) => { e.target === modalDiv && close() }
         document.addEventListener("click", ModalOverlay)
     
-        const esc = (e: KeyboardEvent) => { e.key === "Escape" && isShow && close() }
+        const esc = (e: KeyboardEvent) => { e.key === "Escape" && close() }
         document.addEventListener("keydown", esc)
         
         return () => {
           document.removeEventListener("click", ModalOverlay)
           document.removeEventListener("keydown", esc)
         }
-      }, [isShow, close]);
+      }, [close]);
     
 
     return ReactDOM.createPortal (

@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import moduleStyles from './ingr-detail.module.css';
 import { useSelector } from "react-redux";
-import { dataSelector, idSelector, showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
+import { dataSelector, idSelector } from "../../services/redux/selectors/selectorsIngr";
 import { T_Id } from '../../utils/types';
-
+import { useNavigate } from 'react-router-dom';
 
 type TIngrDetailProps = {
     idProps?: string;
@@ -11,11 +11,17 @@ type TIngrDetailProps = {
 
 const IngrDetail: FC<TIngrDetailProps> = ({ idProps }) => {
 
+    const navigate = useNavigate();
+
     const data = useSelector(dataSelector)
     const id = useSelector(idSelector)
+ 
+    const dataModul = data.filter((item: T_Id) => item._id === (id || idProps))
 
-    const dataModul = data.filter((item: T_Id) => item._id === id || idProps)
-
+    if (dataModul.length === 0 ){
+        navigate('/404')
+    }
+    
     return (
         <>
             {dataModul[0] &&
