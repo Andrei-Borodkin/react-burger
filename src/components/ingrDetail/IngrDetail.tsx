@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import moduleStyles from './ingr-detail.module.css';
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
+import { useSelector } from "../../services/redux/store";
 import { dataSelector, idSelector } from "../../services/redux/selectors/selectorsIngr";
 import { T_Id } from '../../utils/types';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +27,7 @@ const IngrDetail: FC<TIngrDetailProps> = ({ idProps }) => {
         <>
             {dataModul[0] &&
                 <>
-                <div className={`${ idProps &&  moduleStyles.cardNoModal}`}>
+                <div className={`${ idProps ? moduleStyles.cardNoModal : moduleStyles.cardNoModalDump}`}>
                     <div className={moduleStyles.header}>
                         <span className={moduleStyles.headText}>Детали ингредиента</span>
                     </div>

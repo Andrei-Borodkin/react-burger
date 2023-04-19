@@ -29,5 +29,6 @@ export function setCookie(name: string,  value: string,  props: Record<string, u
 }
 
 export function deleteCookie(name: string) {
-  setCookie(name, "", { expires: -1 });
+  //setCookie(name, "", { expires: -1 });
+  setCookie(name, "", { path: '/' });
 }

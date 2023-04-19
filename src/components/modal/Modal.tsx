@@ -27,7 +27,6 @@ const Modal: FC<ModalProps> = ({ children, close }) => {
         }
       }, [close]);
     
-
     return ReactDOM.createPortal (
         <>
             <div className={moduleStyles.wrapper}>

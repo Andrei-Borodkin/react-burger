@@ -23,7 +23,7 @@ export const loginRequest = (email: string, password: string) => request("auth/l
 })
 
 //POST https://norma.nomoreparties.space/api/auth/token 
-export const refToken = (refreshToken: string) => request("auth/token", {
+export const refToken = (refreshToken: string | undefined) => request("auth/token", {
     method: 'post',
     headers: {'Content-Type':'application/json'}, 
     body: JSON.stringify({ token: refreshToken })

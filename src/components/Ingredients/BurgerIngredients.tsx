@@ -3,29 +3,30 @@ import { useInView } from 'react-intersection-observer';
 import IngrStyles from './ingredients.module.css';
 import TabComp from '../tab/TabComp';
 import Puns from '../puns/Puns';
-import { useSelector, useDispatch } from "react-redux";
+//import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redux/store";
 import { dataSelector, showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
-import { TValType, TvalPunsProps } from '../../utils/types';
+import { TValType, TvalPunsProps, TValueType } from '../../utils/types';
 import Modal from '../modal/Modal';
 import IngrDetail from '../ingrDetail/IngrDetail';
 import { useNavigate } from 'react-router-dom';
 
-type ValueType = 'main' | 'bun' | 'sauce';
+//type TValueType = 'main' | 'bun' | 'sauce';
 
 const BurgerIngredients = () => {
 
-  const dispatch = useDispatch() as any
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const data = useSelector(dataSelector)
   const isShow = useSelector(showIngrSelector)
 
 
-  const bType = data.map((val: TValType) => val.type).filter((item: string, index: number, arr: string) => {
+  const bType = data.map((val) => val.type).filter((item, index, arr) => {
     return arr.indexOf(item) === index;
-  });
-
+  })
+  
   const close = useCallback(() => {
     dispatch(actionIngr.setShowIngr(false))
     navigate(-1);
@@ -41,7 +42,8 @@ const BurgerIngredients = () => {
     else if (inViewSauce) dispatch(actionIngr.setNavigation("sauce"))
   }, [inViewBuns, inViewMains, inViewSauce, dispatch])
 
-  const rusHead = (val: ValueType) => {
+  const rusHead = (val: TValueType) => {
+    
     var ansver = {}
     switch (val) {
       case 'bun': return ansver = { kat: 'Булки', cref: bunsRef };
@@ -62,14 +64,14 @@ const BurgerIngredients = () => {
         <TabComp />
       </div>
       <section className={IngrStyles.section}>
-        {bType.map((val: ValueType, index: number) => (
+        {bType.map((val, index) => (
           <div key={index}>
             <div className={IngrStyles.headline} id={val} ref={rusHead(val).cref}>
               <span className={IngrStyles.headlineSpan}>{rusHead(val).kat}</span>
             </div>
 
             <div className={IngrStyles.puns} >
-              {data.filter((item: TValType) => item.type === val).map((valPuns: TvalPunsProps, i: number) => (
+              {data.filter((item) => item.type === val).map((valPuns: TvalPunsProps, i: number) => (
                 <div key={i}>
                   <Puns valPuns={valPuns} />
                 </div>

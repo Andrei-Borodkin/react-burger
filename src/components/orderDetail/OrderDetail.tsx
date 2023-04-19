@@ -1,7 +1,7 @@
 import React from 'react'
 import moduleStyles from './order-detail.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/redux/store";
 import { orderSelector } from "../../services/redux/selectors/selectorsOrder";
 
 

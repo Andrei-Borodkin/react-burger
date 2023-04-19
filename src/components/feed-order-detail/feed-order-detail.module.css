@@ -1,0 +1,160 @@
+.frame {
+    position: absolute;
+    height: 24px;
+    left: 0px;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    left: 0px;
+    right: 0px;
+    align-items: center;
+}
+
+.frameText {
+    width: 640px;
+    height: 24px;
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    display: flex;
+    color: #F2F2F3;
+    justify-content: space-around;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 12px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 124px;
+    align-items: center;
+    text-align: left;
+}
+
+.infoFrame {
+    width: 640px;
+}
+
+.infoText {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    color: #F2F2F3;
+}
+
+.infoStatus {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #00CCCC;
+}
+
+.ingr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 24px;
+    position: absolute;
+    height: 366px;
+    left: 0px;
+    right: 0px;
+    top: 250px;
+}
+
+.ingrFrame {
+    width: 640px;
+    height: 30px;
+}
+
+.ingrStatus {
+     font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 24px;
+    width: 640px;
+    height: 366px;
+    overflow-y: scroll;
+}
+
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 16px;
+    width: 608px;
+    height: 376px;
+}
+
+.timePrice {
+    position: absolute;
+    left: 0px;
+    top: 660px;
+    display: flex;
+    left: 0px;
+    right: 0px;
+    justify-content: center;
+}
+
+.alignment {
+    width: 640px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.time {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #8585AD;
+    justify-content: flex-start;
+}
+
+.alignmentPrice {
+    display: flex;
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+}
+.tPrice {
+    margin-right: 12px;
+}

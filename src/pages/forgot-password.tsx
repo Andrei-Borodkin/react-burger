@@ -2,7 +2,7 @@ import React, { useEffect, ChangeEvent } from 'react';
 import forgotStyles from './forgot.module.css';
 import { EmailInput, Button  } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../services/redux/store";
 import { actionSpinner } from '../services/redux/actionCreators/actionSpinner';
 import { rFRPSelector } from '../services/redux/selectors/selectorsForgResPas';
 import { actionForgResPas } from '../services/redux/actionCreators/actionForgResPas';
@@ -11,7 +11,7 @@ import { fetchForgPass } from '../services/redux/thunks/thunkForgPass';
 
 const ForgotPage = () => {
    
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const { email, status } = useSelector(rFRPSelector);

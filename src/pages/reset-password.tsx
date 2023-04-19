@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect} from 'react';
 import resetStyles from './reset.module.css';
 import {  PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../services/redux/store";
 import { actionForgResPas } from '../services/redux/actionCreators/actionForgResPas';
 import { rFRPSelector } from '../services/redux/selectors/selectorsForgResPas';
 import { fetchResPass } from '../services/redux/thunks/thunkResPass';
@@ -11,7 +11,7 @@ import { actionSpinner } from '../services/redux/actionCreators/actionSpinner';
 
 const ResetPage = () => {
 
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const { password, kod, status, statusRes } = useSelector(rFRPSelector);

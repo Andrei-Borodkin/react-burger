@@ -1,0 +1,51 @@
+.listItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+    width: 608px;
+    height: 64px;
+}
+
+.itemFrame {
+    width: 405px;
+    height: 24px;
+}
+
+.itemText {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+}
+
+.price {
+    display: flex;
+    padding: 0px;
+    gap: 8px;
+    width: 170px;
+    height: 24px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.textPrice {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 24px;
+    color: #F2F2F3;
+}
+
+.items_list {
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    color: white;
+}

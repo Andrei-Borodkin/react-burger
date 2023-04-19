@@ -9,6 +9,7 @@ const AppHeader = () => {
 
   const onClickLogo = () => { navigate('/profile') }
   const onClickConstr = () => { navigate('/') }
+  const onClickFeed = () => { navigate('/feed') }
   
 
   const location = useLocation();
@@ -28,11 +29,11 @@ const AppHeader = () => {
             </span>
           </div>
 
-          <div className={headerStyles.inactive}>
+          <div className={headerStyles.inactive} onClick={onClickFeed}>
             <div className={headerStyles.ico}>
-              <ListIcon type="secondary" />
+              {location.pathname === '/feed' ? <ListIcon type="primary"/> : <ListIcon type="secondary"/> } 
             </div>
-            <span className={headerStyles.span} >
+            <span className={` ${headerStyles.span} ${location.pathname === '/feed' && headerStyles.spanActiv } `} >
               Лента заказов
             </span>
           </div>
@@ -45,9 +46,9 @@ const AppHeader = () => {
 
           <nav className={headerStyles.login} onClick={onClickLogo} >
             <div className={headerStyles.ico}>
-            {location.pathname === '/profile' ? <ProfileIcon type="primary"/> : <ProfileIcon type="secondary"/> } 
+            {(location.pathname === '/profile' || location.pathname === '/profile/orders') ? <ProfileIcon type="primary"/> : <ProfileIcon type="secondary"/> } 
             </div>
-            <span  className={` ${headerStyles.span} ${location.pathname === '/profile' && headerStyles.spanActiv } `} >
+            <span  className={` ${headerStyles.span} ${(location.pathname === '/profile' || location.pathname === '/profile/orders') && headerStyles.spanActiv } `} >
               Личный кабинет
             </span>
           </nav>
