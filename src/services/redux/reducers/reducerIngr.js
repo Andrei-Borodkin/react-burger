@@ -1,4 +1,4 @@
-import { SET_DATA,  SET_ID_MOD, SET_SHOW_INGR, SET_NAVIGATION, GET_INGR_FAILED} from "../actionTypes/actionTypes";
+import { SET_DATA,  SET_ID_MOD, SET_SHOW_INGR, SET_NAVIGATION, GET_INGR_FAILED, SET_ISSHOWINGER_ID} from "../actionTypes/actionTypes";
 
 export const initialState = {
   data: [],
@@ -21,6 +21,12 @@ export const reducerIngr = (state = initialState, action) => {
         isShowInger: action.payload,
         idtouch: initialState.idtouch
       }
+      case SET_ISSHOWINGER_ID:
+        return {
+          ...state,
+          isShowInger: action.payload,
+          idtouch: action.id
+        }
     case SET_ID_MOD:
       return {
         ...state,

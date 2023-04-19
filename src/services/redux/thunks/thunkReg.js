@@ -7,19 +7,14 @@ export const fetchRgistr = () => {
 
     return (dispatch, getState, extra) => {
 
-        const form = getState().autReg
+        const { email, password, name} = getState().autReg
 
         dispatch(actionSpinner.loading(true))
 
-        setRegisterData(form)
-            .then((data) => {
-                if (data) {
-                    toastSuccess('Пользователь зарегистрирован')
-                    dispatch(actionAutReg.setStatus(true))
-                } else {
-                    toastError('Ошибка получения данных')
-                    dispatch(actionSpinner.loading(false))
-                }
+        setRegisterData(email, password, name)
+            .then(() => {
+                toastSuccess('Пользователь зарегистрирован')
+                dispatch(actionAutReg.setStatus(true))
             })
             .catch((err) => {
                 toastError(err.message)

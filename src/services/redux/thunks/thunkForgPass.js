@@ -10,15 +10,7 @@ export const fetchForgPass = (email) => {
         dispatch(actionSpinner.loading(true))
 
         forgotPass(email)
-            .then((data) => {
-                if (data?.success) {
-                    dispatch(actionForgResPas.setStatus(true))
-
-                } else {
-                    toastError(data.message)
-                    dispatch(actionSpinner.loading(false))
-                }
-            })
+            .then(() => { dispatch(actionForgResPas.setStatus(true)) })
             .catch((err) => {
                 toastError(err.message)
                 dispatch(actionSpinner.loading(false))

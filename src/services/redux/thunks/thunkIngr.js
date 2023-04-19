@@ -11,13 +11,8 @@ export const fetchData = () => {
 
         getIngr()
             .then((data) => {
-                if (data) {
-                    dispatch(actionIngr.setData(data))
-                    dispatch(actionSpinner.loading(false))
-                } else {
-                    dispatch(actionIngr.setInitialState())
-                    toastError('Полученные данные не корректны')
-                }
+                dispatch(actionIngr.setData(data.data))
+                dispatch(actionSpinner.loading(false))
             })
             .catch((err) => {
                 if (err.message === 'jwt expired') {

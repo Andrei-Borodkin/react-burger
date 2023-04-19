@@ -24,5 +24,6 @@ export const CL_RES_PASS = "CL_RES_PASS";
 export const CL_SIGNIN = "CL_SIGNIN";
 export const SET_SIGNIN_NEW = "SET_SIGNIN_NEW";
 export const CL_SIGNIN_NEW = "CL_SIGNIN_NEW";
+export const SET_ISSHOWINGER_ID = "SET_ISSHOWINGER_ID";
 
 

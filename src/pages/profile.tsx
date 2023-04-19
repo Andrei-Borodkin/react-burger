@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import profileStyles from './profile.module.css';
-import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux';
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
 import { actionSignIn } from '../services/redux/actionCreators/actionSignIn';
@@ -13,20 +13,21 @@ const ProfilePage = () => {
 
     const { email, name, password, emailNew, nameNew, passwordNew, statusSign } = useSelector(rSignInSelector);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!statusSign) {
             const accessToken = getCookie('accessToken')
             if (!accessToken) {
-                navigate('/login', { replace: true })
+                //navigate('/login', { replace: true })
+                navigate('/login')
             }
         }
     }, [statusSign])
 
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actionSignIn.setSignInNew(e.target.name, e.target.value))
     }
 
@@ -66,12 +67,12 @@ const ProfilePage = () => {
 
             <div className={profileStyles.edit}>
 
-                <EmailInput
+                <Input
                     onChange={onFormChange}
                     value={nameNew || name}
                     name={'nameNew'}
                     placeholder="Имя"
-                    isIcon={true}
+                    icon={'EditIcon'}
                     extraClass="mb-2"
                     error={false}
                 />

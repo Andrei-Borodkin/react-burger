@@ -7,7 +7,7 @@ import { actionSpinner } from '../services/redux/actionCreators/actionSpinner';
 
 const NotFound404 = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch() as any
   useEffect(() => {
     dispatch(actionSpinner.loading(false))
   }, [dispatch])

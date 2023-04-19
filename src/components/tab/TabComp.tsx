@@ -4,12 +4,14 @@ import { curNavSelector } from "../../services/redux/selectors/selectorsIngr";
 import { useSelector, useDispatch } from "react-redux";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
 
-const TabComp = ( ) => {
+type TonTabClick = (current: string) => void;
+
+const TabComp = () => {
   
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() as any
   const current = useSelector(curNavSelector)
 
-  const onTabClick = (current) => {
+  const onTabClick: TonTabClick = (current) => {
     dispatch(actionIngr.setNavigation(current))
     const el = document.getElementById(current)
     el && el.scrollIntoView({ behavior: "smooth"})

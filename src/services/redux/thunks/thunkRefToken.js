@@ -16,31 +16,24 @@ export const fetchRefToken = (err_func) => {
 
         refToken(refreshToken)
             .then((data) => {
-                if (data?.success) {
 
-                    const accessToken = data.accessToken.split('Bearer ')[1];
-                    const refreshToken = data.refreshToken
+                const accessToken = data.accessToken.split('Bearer ')[1];
+                const refreshToken = data.refreshToken
 
-                    if (accessToken && refreshToken) {
-                        setCookie('accessToken', accessToken, { path: '/' } );
-                        setCookie('refreshToken', refreshToken, { path: '/' } );
-                        if (err_func === "err_getIngr" ) dispatch(fetchData())
-                        if (err_func === "err_getOrder" ) dispatch(fetchOrder())
-                        if (err_func === "err_getUser" ) dispatch(fetchGetUser())
-                        if (err_func === "err_logout" ) dispatch(fetchLogout())
-                        if (err_func === "err_profil" ) dispatch(fetchSignInNew())
-                    }else{
-                        deleteCookie('accessToken')
-                        deleteCookie('refreshToken')
-                        toastError(`Ошибка обновления`)
-                    }
-
-                } else {
+                if (accessToken && refreshToken) {
+                    setCookie('accessToken', accessToken, { path: '/' } );
+                    setCookie('refreshToken', refreshToken, { path: '/' } );
+                    if (err_func === "err_getIngr" ) dispatch(fetchData())
+                    if (err_func === "err_getOrder" ) dispatch(fetchOrder())
+                    if (err_func === "err_getUser" ) dispatch(fetchGetUser())
+                    if (err_func === "err_logout" ) dispatch(fetchLogout())
+                    if (err_func === "err_profil" ) dispatch(fetchSignInNew())
+                }else{
                     deleteCookie('accessToken')
                     deleteCookie('refreshToken')
-                    toastError(`Ошибка аутентификации ${data.message}`)
-                    dispatch(actionSpinner.loading(false))
+                    toastError(`Ошибка обновления`)
                 }
+
             })
             .catch((err) => {
                 deleteCookie('accessToken')

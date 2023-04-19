@@ -12,22 +12,19 @@ export const fetchOrder = (idInger) => {
 
         getOrder(idInger)
             .then((data) => {
-                if (data) {
-                    dispatch(actionOrder.setOrder(data))
-                    dispatch(actionSpinner.loading(false))
-                    dispatch(actionConstr.setShow(true))
-                    toastSuccess('Заказ зарегистрирован')
-                } else {
-                    dispatch(actionOrder.setInitialState())
-                    toastError('Ошибка получения номера заказа')
-                    dispatch(actionSpinner.loading(false))
-                }
+
+                dispatch(actionOrder.setOrder(data.order.number))
+                dispatch(actionSpinner.loading(false))
+                dispatch(actionConstr.setShow(true))
+                toastSuccess('Заказ зарегистрирован')
+
             })
             .catch((err) => {
                 if (err.message === 'jwt expired') {
                     dispatch(fetchRefToken("err_getIngr"))
                 }else{
                     toastError(err.message)
+                    dispatch(actionOrder.setInitialState())
                     dispatch(actionSpinner.loading(false))
                 }
             })

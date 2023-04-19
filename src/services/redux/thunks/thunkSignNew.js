@@ -1,7 +1,6 @@
 import { actionSpinner } from "../actionCreators/actionSpinner"
 import { actionSignIn } from "../actionCreators/actionSignIn"
-import { loginRequest, setUserData } from '../../../utils/auth-api';
-import { setCookie } from '../../../utils/func-cooke';
+import { setUserData } from '../../../utils/auth-api';
 import { toastSuccess, toastError } from "../../../utils/func";
 import { fetchRefToken } from "./thunkRefToken";
 
@@ -19,19 +18,12 @@ export const fetchSignInNew = () => {
  
         setUserData(form)
             .then((data) => {
-                if (data?.success) {
+                dispatch(actionSignIn.setSignIn("name", data.user.name))
+                dispatch(actionSignIn.setSignIn("email", data.user.email))
+                dispatch(actionSignIn.clSignInNew())
 
-                    dispatch(actionSignIn.setSignIn("name", data.user.name))
-                    dispatch(actionSignIn.setSignIn("email", data.user.email))
-                    dispatch(actionSignIn.clSignInNew())
-
-                    toastSuccess("Данные профиля успешно изменены")
-                    dispatch(actionSpinner.loading(false))
-
-                } else {
-                    toastError(`Ошибка обновления ${data.message}`)
-                    dispatch(actionSpinner.loading(false))
-                }
+                toastSuccess("Данные профиля успешно изменены")
+                dispatch(actionSpinner.loading(false))
             })
             .catch((err) => {
                 if (err.message === 'jwt expired') {

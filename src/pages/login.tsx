@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { ChangeEvent, useEffect, FormEvent } from 'react';
 import loginStyles from './login.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { actionSignIn } from "../services/redux/actionCreators/actionSignIn"
@@ -14,19 +14,20 @@ import { toastError } from '../utils/func';
 
 const LoginPage = () => {
 
-    
+
     const { email, password, statusSign } = useSelector(rSignInSelector);
 
     const emailFRP = useSelector(rFRPEmailSelector);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actionSignIn.setSignIn(e.target.name, e.target.value))
     }
 
-    const onClick = (e) => {
-        // пока только на пустоту        
+    const onSubmit = (e: FormEvent) => {
+        // пока только на пустоту  
+        e.preventDefault()
         if (email !== '' && password !== '') {
             dispatch(fetchSignIn())
         } else {
@@ -37,55 +38,57 @@ const LoginPage = () => {
     useEffect(() => {
 
         dispatch(actionSpinner.loading(false))
-        if (statusSign)  navigate('/', { replace: true })
+        if (statusSign) navigate('/', { replace: true })
         if (emailFRP) dispatch(actionForgResPas.setInitialState())
 
         return () => { dispatch(actionSpinner.loading(false)) }
     }, [statusSign, navigate, dispatch])
 
     return (
-        <div className={loginStyles.content}>
+        <form onSubmit={onSubmit}>
+            <div className={loginStyles.content}>
 
-            <div className={loginStyles.edit}>
-                <div className={loginStyles.frame}>
-                    <span>Вход</span>
-                </div>
+                <div className={loginStyles.edit}>
+                    <div className={loginStyles.frame}>
+                        <span>Вход</span>
+                    </div>
                     <EmailInput
                         onChange={onFormChange}
                         value={email}
                         name={'email'}
                         isIcon={false}
                     />
-                
-                
+
+
                     <PasswordInput
                         onChange={onFormChange}
                         value={password}
                         name={'password'}
                         extraClass="mb-2"
                     />
-                
 
-                <div className={loginStyles.but}>
-                    <Button htmlType="button" type="primary" size="medium" onClick={onClick}>
-                        Войти
-                    </Button>
+
+                    <div className={loginStyles.but}>
+                        <Button htmlType="submit" type="primary" size="medium">
+                            Войти
+                        </Button>
+                    </div>
+
+                </div>
+                <div className={loginStyles.actions}>
+                    <div className={loginStyles.block}>
+                        <span className={loginStyles.p}>Вы — новый пользователь?</span>
+                        <Link to={{ pathname: `/register` }} className={loginStyles.a}>Зарегистрироваться</Link>
+                    </div>
+
+                    <div className={loginStyles.block}>
+                        <span className={loginStyles.p}>Забыли пароль?</span>
+                        <Link to={{ pathname: `/forgot-password` }} className={loginStyles.a}>Восстановить пароль</Link>
+                    </div>
                 </div>
 
             </div>
-            <div className={loginStyles.actions}>
-                <div className={loginStyles.block}>
-                    <span className={loginStyles.p}>Вы — новый пользователь?</span>
-                    <Link to={{ pathname: `/register` }} className={loginStyles.a}>Зарегистрироваться</Link>
-                </div>
-            
-                <div className={loginStyles.block}>
-                    <span className={loginStyles.p}>Забыли пароль?</span>
-                    <Link to={{ pathname: `/forgot-password` }} className={loginStyles.a}>Восстановить пароль</Link>
-                </div>
-            </div>
-
-        </div>
+        </form>
     )
 
 }

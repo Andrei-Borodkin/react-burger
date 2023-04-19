@@ -1,68 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import IngrStyles from './ingredients.module.css';
 import TabComp from '../tab/TabComp';
 import Puns from '../puns/Puns';
-import IngrModal from '../ingrModal/IngrModal';
 import { useSelector, useDispatch } from "react-redux";
-import { dataSelector,  showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
+import { dataSelector, showIngrSelector } from "../../services/redux/selectors/selectorsIngr";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
+import { TValType, TvalPunsProps } from '../../utils/types';
+import Modal from '../modal/Modal';
+import IngrDetail from '../ingrDetail/IngrDetail';
 import { useNavigate } from 'react-router-dom';
-import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
-import { getCookie } from '../../utils/func-cooke';
-import { fetchData } from '../../services/redux/thunks/thunkIngr';
+
+type ValueType = 'main' | 'bun' | 'sauce';
 
 const BurgerIngredients = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() as any
+  const navigate = useNavigate();
+
   const data = useSelector(dataSelector)
   const isShow = useSelector(showIngrSelector)
-  
-  const navigate = useNavigate();
-  const { statusSign } = useSelector(rSignInSelector);
 
-  useEffect(() => {
 
-    if (statusSign) {
-      dispatch(fetchData())
-    } else {
-
-      const accessToken = getCookie('accessToken')
-      if (accessToken) {
-        dispatch(fetchData())
-      } else {
-        navigate('/login', { replace: true })
-      }
-    }
-
-  }, [])
-
-  const bType = data.map(val => val.type).filter((item, index, arr) => {
+  const bType = data.map((val: TValType) => val.type).filter((item: string, index: number, arr: string) => {
     return arr.indexOf(item) === index;
   });
 
-  const [bunsRef, inViewBuns] = useInView({threshold: 0})
-  const [mainsRef, inViewMains] = useInView({threshold: 0})
-  const [sauceRef, inViewSauce] = useInView({threshold: 0})
+  const close = useCallback(() => {
+    dispatch(actionIngr.setShowIngr(false))
+    navigate(-1);
+  }, [dispatch])
 
-  useEffect(()=>{
+  const [bunsRef, inViewBuns] = useInView({ threshold: 0 })
+  const [mainsRef, inViewMains] = useInView({ threshold: 0 })
+  const [sauceRef, inViewSauce] = useInView({ threshold: 0 })
+
+  useEffect(() => {
     if (inViewBuns) dispatch(actionIngr.setNavigation("bun"))
     else if (inViewMains) dispatch(actionIngr.setNavigation("main"))
     else if (inViewSauce) dispatch(actionIngr.setNavigation("sauce"))
   }, [inViewBuns, inViewMains, inViewSauce, dispatch])
 
-  const rusHead = (val) => {
+  const rusHead = (val: ValueType) => {
     var ansver = {}
     switch (val) {
-      case 'bun': ansver = {kat: 'Булки', cref: bunsRef};
+      case 'bun': return ansver = { kat: 'Булки', cref: bunsRef };
         break;
-      case 'main': ansver = {kat: 'Начинки', cref: mainsRef}
+      case 'main': return ansver = { kat: 'Начинки', cref: mainsRef }
         break;
-      case 'sauce': ansver = {kat: 'Соусы', cref: sauceRef}
+      case 'sauce': return ansver = { kat: 'Соусы', cref: sauceRef }
         break;
-      default: ansver = 'мистический ингридиент';
     }
-    return ansver
   }
 
   return (
@@ -74,15 +62,15 @@ const BurgerIngredients = () => {
         <TabComp />
       </div>
       <section className={IngrStyles.section}>
-        {bType.map((val, index) => (
+        {bType.map((val: ValueType, index: number) => (
           <div key={index}>
             <div className={IngrStyles.headline} id={val} ref={rusHead(val).cref}>
               <span className={IngrStyles.headlineSpan}>{rusHead(val).kat}</span>
             </div>
 
             <div className={IngrStyles.puns} >
-              {data.filter((item) => item.type === val).map(( valPuns , i ) => (
-                 <div key={i}>
+              {data.filter((item: TValType) => item.type === val).map((valPuns: TvalPunsProps, i: number) => (
+                <div key={i}>
                   <Puns valPuns={valPuns} />
                 </div>
               ))}
@@ -94,7 +82,7 @@ const BurgerIngredients = () => {
 
       {isShow && (
         <div>
-          <IngrModal />
+          <Modal close={close}> <IngrDetail /></Modal>
         </div>
       )}
 

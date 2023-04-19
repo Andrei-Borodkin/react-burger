@@ -1,21 +1,35 @@
-import React, { useRef} from 'react'
+import React, { useRef, FC, DragEvent } from 'react'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burCompStyles from './burel.module.css';
 import { useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
+import { Identifier, XYCoord } from 'dnd-core'
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr"
-import PropTypes from 'prop-types';
+import { TIngrBC, TmConstElement } from "../../utils/types"
 
-const CompConstructorElement = ({val, index, mConstElement}) => {
-   
-    const dispatch = useDispatch()
-    const ref = useRef(null);
 
-    const delIngr = (id) => {
+type TCompConstructorElementProps = {
+    index: number;
+    val: TIngrBC;
+    mConstElement: TmConstElement
+}
+
+type DragItem = {
+    index: number
+    id: string
+    type: string
+  }
+
+const CompConstructorElement: FC<TCompConstructorElementProps> = ({ val, index, mConstElement }) => {
+
+    const dispatch = useDispatch() as any
+    const ref = useRef<HTMLDivElement>(null);
+
+    const delIngr = (id: string) => {
         dispatch(actionConstr.delIngr(id))
     }
 
-      const [{ handlerId }, dropTarget] = useDrop({
+    const [{ handlerId }, dropTarget] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
         accept: 'component',
         collect(monitor) {
             return {
@@ -36,7 +50,7 @@ const CompConstructorElement = ({val, index, mConstElement}) => {
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
             }
@@ -59,13 +73,13 @@ const CompConstructorElement = ({val, index, mConstElement}) => {
     dragRef(dropTarget(ref));
 
     const opacity = isDragging ? 0 : 1;
-    const preventDefault = (e) => e.preventDefault();
+    const preventDefault = (e: DragEvent<HTMLDivElement>) => e.preventDefault();
 
 
     return (
-                      
-        <div 
-            className={burCompStyles.component} 
+
+        <div
+            className={burCompStyles.component}
             ref={ref}
             style={{ opacity }}
             onDrop={preventDefault}
@@ -80,23 +94,12 @@ const CompConstructorElement = ({val, index, mConstElement}) => {
                 text={val.name}
                 price={val.price}
                 thumbnail={val.image}
-                handleClose = {() => delIngr(val.id)}
-                
+                handleClose={() => delIngr(val.id)}
+
             />
         </div>
 
-      )
-  }
-
-  export default React.memo(CompConstructorElement)
-
-CompConstructorElement.propTypes = {
-    val: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired
-    }).isRequired,
-    index: PropTypes.number.isRequired,
-    mConstElement: PropTypes.func.isRequired
+    )
 }
+
+export default React.memo(CompConstructorElement)

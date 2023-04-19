@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ChangeEvent } from 'react';
 import forgotStyles from './forgot.module.css';
 import { EmailInput, Button  } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,12 +11,12 @@ import { fetchForgPass } from '../services/redux/thunks/thunkForgPass';
 
 const ForgotPage = () => {
    
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as any
     const navigate = useNavigate();
 
     const { email, status } = useSelector(rFRPSelector);
  
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actionForgResPas.setMail(e.target.value))
     }
 

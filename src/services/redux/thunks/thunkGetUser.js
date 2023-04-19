@@ -12,13 +12,10 @@ export const fetchGetUser = () => {
 
         getUser()
             .then((data) => {
-                if (data?.success) {
-                    dispatch(actionSignIn.setStatusSignInRef(data.user.name, data.user.email))
-                    dispatch(actionSpinner.loading(false))
-                } else {
-                    toastError(`Ошибка данных ${data.message}`)
-                    dispatch(actionSpinner.loading(false))
-                }
+                
+                dispatch(actionSignIn.setStatusSignInRef(data.user.name, data.user.email))
+                dispatch(actionSpinner.loading(false))
+                
             })
             .catch((err) => {
                 if (err.message === 'jwt expired') {
