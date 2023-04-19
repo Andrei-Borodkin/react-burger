@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import profileStyles from './profile-comp.module.css';
 import { Button, EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from "../../services/redux/store";
@@ -22,13 +22,15 @@ const ProfileComp = () => {
 
     }
 
-    const onClickSave = () => {
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault()
         dispatch(fetchSignInNew())
     }
 
 
     return (
-        <>
+    
+        <form onSubmit={onSubmit}>
             <div className={profileStyles.edit}>
                 <Input
                     onChange={onFormChange}
@@ -61,7 +63,7 @@ const ProfileComp = () => {
                         <Button htmlType="button" type="secondary" size="small" extraClass="ml-2" onClick={onClickClear}>
                             Отмена
                         </Button>
-                        <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={onClickSave}>
+                        <Button htmlType="submit" type="primary" size="small" extraClass="ml-2">
                             Сохранить
                         </Button>
 
@@ -69,9 +71,9 @@ const ProfileComp = () => {
                 }
 
             </div>
+            </form>
 
-
-        </>
+     
     )
 
 }

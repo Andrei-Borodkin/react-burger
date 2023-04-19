@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect} from 'react';
 import resetStyles from './reset.module.css';
 import {  PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,7 +20,8 @@ const ResetPage = () => {
         dispatch(actionForgResPas.setPassword(e.target.name, e.target.value))
     }
 
-    const onClick = () => {
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault()
         dispatch( fetchResPass(password, kod) ) 
     }
 
@@ -31,13 +32,14 @@ const ResetPage = () => {
         return () => {
             if (statusRes) dispatch(actionForgResPas.setInitialState())
         }
-    }, [statusRes, status])
+    }, [statusRes, status, dispatch, navigate])
     
     useEffect(() => {
         dispatch(actionSpinner.loading(false))
     }, [dispatch])
 
     return (
+        <form onSubmit={onSubmit}>
         <div className={resetStyles.content}>
 
             <div className={resetStyles.edit}>
@@ -61,7 +63,7 @@ const ResetPage = () => {
                 />
 
                 <div className={resetStyles.but}>
-                    <Button htmlType="button" type="primary" size="medium" onClick={onClick}>
+                    <Button htmlType="submit" type="primary" size="medium" >
                         Сохранить
                     </Button>
                 </div>
@@ -76,6 +78,7 @@ const ResetPage = () => {
             </div>
 
         </div>
+        </form>
     )
 
 }

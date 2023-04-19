@@ -43,7 +43,7 @@ const App = () => {
    const close = useCallback(() => {
       dispatch(actionIngr.setShowIngr(false))
       navigate(-1);
-   }, [dispatch])
+   }, [dispatch, navigate])
 
 
    useEffect(() => {
@@ -61,7 +61,7 @@ const App = () => {
          dispatch(actionIngr.setShowIngrID(true, id))
       }
       
-   }, [])
+   }, []) // eslint-disable-line
 
    return (
       <div className={appStyles.body}>

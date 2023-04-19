@@ -9,15 +9,15 @@ export const socketMiddleware = (): Middleware => {
     let socket: WebSocket | null = null;
 
     return next => (action: TApplicationActions) => {
-      const { dispatch, getState } = store;
+      const { dispatch, getState } = store; // eslint-disable-line
       const { type } = action;
 
 
       if (type === 'WS_CONNECTION_START') {
         socket = new WebSocket(action.payload);
         dispatch(actionSpinner.loading(true))
-
       }
+
       if (socket) {
 
         // функция, которая вызывается при открытии сокета
@@ -41,7 +41,6 @@ export const socketMiddleware = (): Middleware => {
         socket.onclose = ev => {
           dispatch(actionWS.socketOnclose());
           dispatch(actionSpinner.loading(false))
-
         };
         // onclose долго закрывает .. помогаем
         if (type === 'WS_CONNECTION_CLOSED') {
