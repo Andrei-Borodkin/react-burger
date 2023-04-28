@@ -1,5 +1,13 @@
-# run server
+### description
+Приложение для заказа космической еды
+
+### technologies
+React js, Redux, typescript, cypress
+
+### link to the site on yandex cloud
 https://stellar.students.nomoredomains.monster/
+
+#
 
 # Getting Started with Create React App
 
