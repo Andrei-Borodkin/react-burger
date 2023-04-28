@@ -35,8 +35,6 @@ export const socketMiddleware = (): Middleware => {
           const { data } = event;
           const parsedData = JSON.parse(data)
           dispatch(actionWS.socketOnmessage(parsedData));
-          console.log(parsedData);
-          
           dispatch(actionSpinner.loading(false))
         };
         // функция, которая вызывается при закрытии соединения

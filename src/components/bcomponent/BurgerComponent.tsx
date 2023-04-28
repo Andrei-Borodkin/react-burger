@@ -20,8 +20,6 @@ const BurgerComponent = () => {
     const [{ isHover }, dropTarget] = useDrop({
         accept: "data",
         drop(val: TValPuns) {
-            console.log(val.valPuns);
-            
             dispatch(actionConstr.addConstr(val.valPuns))
         },
         collect: monitor => ({
@@ -35,8 +33,6 @@ const BurgerComponent = () => {
         newElem.splice(dragIndex, 1)
         newElem.splice(hoverIndex, 0, dragElem)
         dispatch(actionConstr.updIngr(newElem))
-        console.log(newElem);
-        
     }, [ingr, dispatch]);
 
     const border = isHover ? '0.5px dashed #4c4cff' : '1px dashed transparent';
