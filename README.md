@@ -1,6 +1,5 @@
 # run server
-https://stellar.students.nomoredomains.monster/ \
-ревьюеру для ssh создал пользователя testuser
+https://stellar.students.nomoredomains.monster/
 
 # Getting Started with Create React App
 
