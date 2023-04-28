@@ -1,18 +1,18 @@
 import React, { useCallback } from 'react'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import burCompStyles from './burcomp.module.css';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redux/store";
 import { showIngrBun, showIngr } from "../../services/redux/selectors/selectorsConstr";
 import { useDrop } from "react-dnd";
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr"
 import CompConstructorElement from '../compConstructorElement/CompConstructorElement'
 import img_dump from '../../images/bun-dump.png';
-import {TIngrBC, TmConstElement, TValPuns} from "../../utils/types"
+import { TmConstElement, TValPuns} from "../../utils/types"
 
 
 const BurgerComponent = () => {
 
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
 
     const dataBun = useSelector(showIngrBun)
     const ingr = useSelector(showIngr)
@@ -66,7 +66,7 @@ const BurgerComponent = () => {
 
                     {ingr.length > 0 ?
                         <section className={`${burCompStyles.sectionOver} mb-2`} >
-                            {ingr.map((val: TIngrBC, index: number) => (
+                            {ingr.map((val, index) => (
                                 <div key={val.id} >
                                     <CompConstructorElement val={val} index={index} mConstElement={mConstElement} />
                                 </div>

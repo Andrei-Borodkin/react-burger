@@ -1,16 +1,16 @@
 import React, { useRef, FC, DragEvent } from 'react'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burCompStyles from './burel.module.css';
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/redux/store";
 import { useDrop, useDrag } from "react-dnd";
 import { Identifier, XYCoord } from 'dnd-core'
 import { actionConstr } from "../../services/redux/actionCreators/actionConstr"
-import { TIngrBC, TmConstElement } from "../../utils/types"
+import { TIngrBC, TValPunsAction, TmConstElement } from "../../utils/types"
 
 
 type TCompConstructorElementProps = {
     index: number;
-    val: TIngrBC;
+    val: TValPunsAction;
     mConstElement: TmConstElement
 }
 
@@ -22,7 +22,7 @@ type DragItem = {
 
 const CompConstructorElement: FC<TCompConstructorElementProps> = ({ val, index, mConstElement }) => {
 
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
     const ref = useRef<HTMLDivElement>(null);
 
     const delIngr = (id: string) => {

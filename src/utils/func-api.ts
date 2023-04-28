@@ -2,8 +2,17 @@ export const SERVER_URL = "https://norma.nomoreparties.space/api/"
 
 type TcheckSuccess = {
     success: boolean;
-    data: [];
     message: string;
+    accessToken: string;
+    refreshToken: string;
+    user: {
+        name: string;
+        email: string;
+    }
+    data: [];
+    order: {
+        number: string;
+    }
 }
 
 // status === 403 тк нужно отловить jwt expired

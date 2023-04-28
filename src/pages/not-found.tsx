@@ -2,12 +2,12 @@ import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import notfoundStyles from './notFound.module.css';
 import pageNotFound from "../images/404.png";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../services/redux/store";
 import { actionSpinner } from '../services/redux/actionCreators/actionSpinner';
 
 const NotFound404 = () => {
 
-  const dispatch = useDispatch() as any
+  const dispatch = useDispatch()
   useEffect(() => {
     dispatch(actionSpinner.loading(false))
   }, [dispatch])

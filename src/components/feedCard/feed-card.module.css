@@ -1,0 +1,142 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 24px;
+    background: #1C1C21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+
+.id {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+   /* width: 536px;*/
+    width: 100%;
+    height: 24px;
+    justify-content: space-between;
+}
+
+.textID {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    color: #F2F2F3;
+}
+
+.textTime {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #8585AD;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+   /* width: 536px;*/
+    width: 100%;
+    /*height: 30px;*/
+}
+
+.infoName {
+
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+   /* line-height: 30px;*/
+    color: #F2F2F3;
+}
+
+.infoStatus {
+    /*display: none;*/
+
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #00CCCC;
+}
+
+.compPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 24px;
+   /* width: 536px;*/
+    width: 100%;
+    height: 64px;
+}
+
+
+.price {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    height: 64px;
+}
+
+.textPrice {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    color: #F2F2F3;
+}
+
+
+.ingr {
+   /* width: 436px; */
+    width: 100%;
+    height: 64px;
+    background: #1C1C21;
+}
+
+:root {
+    --shadow-box-color_modal: rgba(0, 0, 0, 0.04);
+    --border-color_modal: rgba(76, 76, 255, 0.2);
+    --bg-color_overlay: rgba(0, 0, 0, 0.6);
+    --bg-color_element: #1c1c21;
+    --text-color_ready: #00cccc;
+    --gradient-color_1: #4c4cff;
+    --gradient-color_2: #801ab2;
+}
+
+.items_list {
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    color: white;
+}
+
+.items_picture {
+    margin-left: -16px;
+}
+
+.items_list>.items_picture:last-child {
+    margin-left: 0;
+}
+.link {
+    color: #1c1c21;
+    width: 100%;
+}

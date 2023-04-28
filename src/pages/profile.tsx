@@ -1,112 +1,106 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import profileStyles from './profile.module.css';
-import { Button, EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../services/redux/store";
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
-import { actionSignIn } from '../services/redux/actionCreators/actionSignIn';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchLogout } from '../services/redux/thunks/thunkLogout';
 import { getCookie } from '../utils/func-cooke';
-import { fetchSignInNew } from '../services/redux/thunks/thunkSignNew';
+import ProfileComp from '../components/profileComp/ProfileComp';
+import FeedCard from '../components/feedCard/FeedCard';
+import { showIngrSelector } from '../services/redux/selectors/selectorsIngr';
+import { actionIngr } from '../services/redux/actionCreators/actionIngr';
+import Modal from '../components/modal/Modal';
+import FeddOrderDetail from '../components/feed-order-detail/FeddOrderDetail';
+import { actionWS } from '../services/redux/actionCreators/actionWS';
+import { wsUrlAuth } from '../utils/const-url';
+import { ordersSelectorWS } from '../services/redux/selectors/selectorsWS';
+import { fetchGetUser } from '../services/redux/thunks/thunkGetUser';
+import { Torders } from '../utils/types';
 
 const ProfilePage = () => {
 
-    const { email, name, password, emailNew, nameNew, passwordNew, statusSign } = useSelector(rSignInSelector);
+    const { statusSign } = useSelector(rSignInSelector);
 
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        if (!statusSign) {
-            const accessToken = getCookie('accessToken')
-            if (!accessToken) {
-                //navigate('/login', { replace: true })
-                navigate('/login')
-            }
+        const accessToken = getCookie('accessToken')
+        if (!statusSign && !accessToken) {
+            //navigate('/login', { replace: true })
+            navigate('/login')
         }
-    }, [statusSign])
+        if (!statusSign && accessToken) {
+            dispatch(fetchGetUser())
+        }
 
 
-    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(actionSignIn.setSignInNew(e.target.name, e.target.value))
-    }
+        dispatch(actionWS.socketConnect(`${wsUrlAuth}${accessToken}`));
+        return () => { dispatch(actionWS.socketOnclose()) }
+    }, [])
 
-    const exitLogin = () => {
-        dispatch(fetchLogout())
-    }
-    const onClickClear = () => {
-        dispatch(actionSignIn.clSignInNew())
+    const orders = useSelector(ordersSelectorWS)
+    const isShow = useSelector(showIngrSelector)
 
-    }
-
-    const onClickSave = () => {
-        dispatch(fetchSignInNew())
-    }
+    const close = useCallback(() => {
+        dispatch(actionIngr.setShowIngr(false))
+        navigate(-1);
+    }, [dispatch])
 
 
-    const color = window.location.pathname === "/profile" ? 'white' : '';
+    const exitLogin = () => { dispatch(fetchLogout()) }
+    const onClickProfil = () => { navigate('/profile') }
+    const onClickProfilOrder = () => { navigate('/profile/orders') }
+
+    const caption = location.pathname === "/profile" ? 'В этом разделе вы можете изменить свои персональные данные'
+        : 'В этом разделе вы можете просмотреть свою историю заказов';
     return (
         <>
             <div className={profileStyles.navigation}>
                 <div className={profileStyles.frame} >
-                    <div className={profileStyles.text} style={{ color }}>Профиль</div>
+                    <div
+                        className={profileStyles.text}
+                        onClick={onClickProfil}
+                        style={{ color: location.pathname === "/profile" ? 'white' : '#8585AD' }}
+                    >
+                        Профиль
+                    </div>
+
                 </div>
                 <div className={profileStyles.frame} >
-                    <div className={profileStyles.text} >История заказов</div>
-
+                    <div className={profileStyles.text}
+                        onClick={onClickProfilOrder}
+                        style={{ color: location.pathname === "/profile/orders" ? 'white' : '#8585AD' }}
+                    >
+                        История заказов
+                    </div>
                 </div>
                 <div className={profileStyles.frame}>
                     <div className={profileStyles.text} onClick={exitLogin}>Выход</div>
-
                 </div>
             </div>
 
             <div className={profileStyles.caption}>
-                <div className={profileStyles.ctext}>В этом разделе вы можете изменить свои персональные данные</div>
+                <div className={profileStyles.ctext}>{caption}</div>
             </div>
 
-            <div className={profileStyles.edit}>
+            {location.pathname === "/profile" ?
+                <ProfileComp /> :
+                <div className={profileStyles.orders}>
+                    {orders.map((val: Torders, index) => (
+                        <div key={val._id} className={profileStyles.ordersWidth}>
+                            {index < 50 && <FeedCard orders={val} />}
+                        </div>
+                    ))}
+                </div>
+            }
 
-                <Input
-                    onChange={onFormChange}
-                    value={nameNew || name}
-                    name={'nameNew'}
-                    placeholder="Имя"
-                    icon={'EditIcon'}
-                    extraClass="mb-2"
-                    error={false}
-                />
-
-                <EmailInput
-                    onChange={onFormChange}
-                    value={emailNew || email}
-                    name={'emailNew'}
-                    placeholder="Логин"
-                    isIcon={true}
-                    extraClass="mb-2"
-                />
-
-                <PasswordInput
-                    onChange={onFormChange}
-                    value={passwordNew || password}
-                    name={'passwordNew'}
-                    icon={'EditIcon'}
-                />
-
-                {(nameNew || emailNew || passwordNew) &&
-                    <div>
-                        <Button htmlType="button" type="secondary" size="small" extraClass="ml-2" onClick={onClickClear}>
-                            Отмена
-                        </Button>
-                        <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={onClickSave}>
-                            Сохранить
-                        </Button>
-
-                    </div>
-                }
-
-            </div>
-
+            {isShow && (
+                <div>
+                    <Modal close={close}> <FeddOrderDetail /></Modal>
+                </div>
+            )}
 
         </>
     )

@@ -1,12 +1,13 @@
 
 import { FC, ReactElement } from 'react'
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
+import { useSelector } from "../../services/redux/store";
 import { Navigate, useLocation } from 'react-router-dom';
 import { rSignInSelector } from '../../services/redux/selectors/selectorsLogin';
 
 type TProtectedRouteElementProps = {
     element: ReactElement;
-    onlyUnAuth: boolean;
+    onlyUnAuth?: boolean;
 }
 
 export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ element, onlyUnAuth = false }) => {

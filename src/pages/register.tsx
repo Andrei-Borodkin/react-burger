@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, FormEvent} from 'react';
 import registerStyles from './register.module.css';
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../services/redux/store";
 import { actionAutReg } from "../services/redux/actionCreators/actionAutReg"
 import { actionSpinner } from "../services/redux/actionCreators/actionSpinner"
 import { fetchRgistr } from "../services/redux/thunks/thunkReg"
@@ -13,7 +13,7 @@ const RegisterPage = () => {
 
     const { name, email, password, statusReg } = useSelector(autRegSelector);
 
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {

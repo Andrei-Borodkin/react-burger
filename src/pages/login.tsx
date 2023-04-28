@@ -3,10 +3,9 @@ import loginStyles from './login.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { actionSignIn } from "../services/redux/actionCreators/actionSignIn"
 import { actionSpinner } from "../services/redux/actionCreators/actionSpinner"
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../services/redux/store";
 import { useNavigate, Link } from 'react-router-dom';
 import { fetchSignIn } from "../services/redux/thunks/thunkSignOut"
-import toast from 'react-hot-toast';
 import { rSignInSelector } from '../services/redux/selectors/selectorsLogin';
 import { rFRPEmailSelector } from '../services/redux/selectors/selectorsForgResPas';
 import { actionForgResPas } from '../services/redux/actionCreators/actionForgResPas';
@@ -18,7 +17,7 @@ const LoginPage = () => {
     const { email, password, statusSign } = useSelector(rSignInSelector);
 
     const emailFRP = useSelector(rFRPEmailSelector);
-    const dispatch = useDispatch() as any
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {

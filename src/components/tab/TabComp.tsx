@@ -1,14 +1,14 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { curNavSelector } from "../../services/redux/selectors/selectorsIngr";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redux/store";
 import { actionIngr } from "../../services/redux/actionCreators/actionIngr"
 
 type TonTabClick = (current: string) => void;
 
 const TabComp = () => {
   
-  const dispatch = useDispatch() as any
+  const dispatch = useDispatch()
   const current = useSelector(curNavSelector)
 
   const onTabClick: TonTabClick = (current) => {

@@ -1,0 +1,13 @@
+.edit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0px;
+    gap: 24px;
+    position: absolute;
+    width: 480px;
+   /* left: 760px;*/
+    left: 40%;
+    top: 240px;
+}

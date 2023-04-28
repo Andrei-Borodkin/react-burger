@@ -3,7 +3,7 @@ import ConstStyles from './burgerconst.module.css';
 import BurgerComponent from '../bcomponent/BurgerComponent';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/Modal';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/redux/store";
 import { useNavigate } from 'react-router-dom';
 import { showSelector } from "../../services/redux/selectors/selectorsConstr";
 import { fetchOrder } from "../../services/redux/thunks/thunkOrder";
@@ -17,7 +17,7 @@ import { actionConstr } from '../../services/redux/actionCreators/actionConstr';
 
 const BurgerConstructor = () => {
 
-  const dispatch = useDispatch() as any
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const isShow = useSelector(showSelector)

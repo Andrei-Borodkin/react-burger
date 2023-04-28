@@ -1,0 +1,50 @@
+.heading {
+    position: absolute;
+    /*left: 380px;*/
+    top: 148px;
+    right: 50%;
+    width: 570px;
+}
+
+.headingText {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    color: #F2F2F3;
+}
+
+.orders {
+    position: absolute;
+    width: 608px;
+    height: 852px;
+    /*left: 372px;*/
+    right: 50%;
+    top: 208px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.orders::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.orders::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.listWidth {
+    width: 608px;
+}
