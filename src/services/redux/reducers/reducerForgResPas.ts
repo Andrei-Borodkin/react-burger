@@ -1,7 +1,7 @@
 import { TactionForgResPas } from "../actionCreators/actionForgResPas";
 import { SET_FORGOT_MAIL, SET_FORGOT_STATUS, SET_FORGOT_PASSWORD, SET_RESET_STATUS, CL_RES_PASS } from "../actionTypes/actionTypes";
 
-type TinitialState = {
+export type TinitialState = {
   email: string,
   password: string,
   kod: string,

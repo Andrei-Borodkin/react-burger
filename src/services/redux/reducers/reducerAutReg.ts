@@ -2,7 +2,7 @@ import { TActionAutReg } from "../actionCreators/actionAutReg";
 import { REGISTER_FORM_SET_VALUE, SET_STATUS_REGISTER } from "../actionTypes/actionTypes";
 
 
-type TinitialState = {
+export type TinitialState = {
   email: string,
   password: string,
   name: string,
@@ -10,10 +10,10 @@ type TinitialState = {
 }
 
 export const initialState: TinitialState = {
-    email: "",
-    password: "",
-    name: "",
-    statusReg: false
+  email: "",
+  password: "",
+  name: "",
+  statusReg: false
 }
 
 export const reducerAutReg = (state = initialState, action: TActionAutReg): TinitialState => {
@@ -24,13 +24,13 @@ export const reducerAutReg = (state = initialState, action: TActionAutReg): Tini
         [action.field]: action.value
       }
 
-      case SET_STATUS_REGISTER:
-        return {
-          ...state,
-          statusReg: action.payload
-        }
-     
-   
+    case SET_STATUS_REGISTER:
+      return {
+        ...state,
+        statusReg: action.payload
+      }
+
+
     default:
       return state;
   }

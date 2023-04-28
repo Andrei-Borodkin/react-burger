@@ -2,7 +2,7 @@ import { TactionSignIn } from "../actionCreators/actionSignIn";
 import { SET_SIGNIN, SET_SIGNIN_STATUS, SET_SIGNIN_STATUS_REF, CL_SIGNIN, SET_SIGNIN_NEW, CL_SIGNIN_NEW } from "../actionTypes/actionTypes";
 
 
-type TinitialState = {
+export type TinitialState = {
   email: string,
   password: string,
   name: string,

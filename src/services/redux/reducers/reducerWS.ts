@@ -9,13 +9,13 @@ import {
   WS_GET_DATA
 } from '../actionTypes/actionTypes';
 
-type TinitialState = {
+export type TinitialState = {
   wsConnected: boolean,
   data: TData,
   error?: Event;
 }
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
   wsConnected: false,
   data: { orders: [], total: 0, totalToday: 0 }
 };

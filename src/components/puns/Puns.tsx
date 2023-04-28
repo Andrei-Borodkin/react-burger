@@ -63,6 +63,7 @@ const Puns: FC<TvalPunsPropsComp> = ({ valPuns }) => {
             to={{ pathname: `/ingredients/${valPuns._id}` }}
             state={{ background: location.pathname }}
             className={punsStyles.link}
+            data-cy="puns"
         >
 
             <div

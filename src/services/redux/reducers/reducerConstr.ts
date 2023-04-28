@@ -2,7 +2,7 @@ import { SET_SHOW, ADD_CONSTR, CL_CONSTR, DEL_INGR, UPD_INGR } from "../actionTy
 import { TValPunsAction } from "../../../utils/types";
 import { TActionConstr } from "../actionCreators/actionConstr";
 
-type TinitialState = {
+export type TinitialState = {
   isShow: boolean,
   bun: TValPunsAction | null,
   ingr: ReadonlyArray<TValPunsAction>,
@@ -22,8 +22,6 @@ export const reducerConstr = (state = initialState, action: TActionConstr): Tini
         isShow: action.payload
       }
     case ADD_CONSTR: {
-
-
       if (action.payload.type === "bun") {
         return { ...state, bun: action.payload }
       }

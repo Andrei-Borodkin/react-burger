@@ -1,7 +1,7 @@
 import { TactionSpinner } from "../actionCreators/actionSpinner";
 import { LOADING } from "../actionTypes/actionTypes";
 
-type TinitialState = {
+export type TinitialState = {
   isLoading: boolean
 }
 
