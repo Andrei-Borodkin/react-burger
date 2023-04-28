@@ -1,4 +1,4 @@
-run server
+#run server
 https://stellar.students.nomoredomains.monster/ \
 ревьюеру для ssh создал пользователя testuser
 
