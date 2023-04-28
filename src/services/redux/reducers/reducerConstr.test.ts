@@ -4,6 +4,21 @@ import { reducerConstr, initialState, TinitialState } from './reducerConstr'
 
 describe('reducerConstr reducer', () => {
 
+  const val = {
+    _id: "643d69a5c3f7b9001cfa093e1",
+    name: "Филе Люминесцентного тетраодонтимформа",
+    type: "main",
+    proteins: 44,
+    fat: 26,
+    carbohydrates: 85,
+    calories: 643,
+    price: 988,
+    image: "https://code.s3.yandex.net/react/code/meat-03.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
+    __v: "0"
+  }
+
   test("should return the initial state", () => { expect(reducerConstr(undefined, {} as any)).toEqual(initialState) })
 
   test("should status setShow", () => {
@@ -24,38 +39,12 @@ describe('reducerConstr reducer', () => {
 
   test("should ADD_CONSTR + uuid()", () => {
 
-    const val = {
-      _id: "643d69a5c3f7b9001cfa093e1",
-      name: "Филе Люминесцентного тетраодонтимформа",
-      type: "main",
-      proteins: 44,
-      fat: 26,
-      carbohydrates: 85,
-      calories: 643,
-      price: 988,
-      image: "https://code.s3.yandex.net/react/code/meat-03.png",
-      image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-      image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-      __v: "0"
-    }
-
     const expectVal = {
       ...initialState,
       ingr: [
         ...initialState.ingr,
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: expect.any(String)
         }
       ]
@@ -71,33 +60,11 @@ describe('reducerConstr reducer', () => {
       bun: null,
       ingr: [
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc1"
         },
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc2"
         }
       ]
@@ -108,18 +75,7 @@ describe('reducerConstr reducer', () => {
       ...state,
       ingr: [
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc1"
         }
       ]
@@ -134,33 +90,11 @@ describe('reducerConstr reducer', () => {
       bun: null,
       ingr: [
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc1"
         },
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc2"
         }
       ]
@@ -169,33 +103,11 @@ describe('reducerConstr reducer', () => {
       ...state,
       ingr: [
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc1"
         },
         {
-          _id: "643d69a5c3f7b9001cfa093e1",
-          name: "Филе Люминесцентного тетраодонтимформа",
-          type: "main",
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: "https://code.s3.yandex.net/react/code/meat-03.png",
-          image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-          image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
-          __v: "0",
+          ...val,
           id: "991e2a31-75e6-4cef-9ee2-aff6510ad3fc2"
         }
       ]
