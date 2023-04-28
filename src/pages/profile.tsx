@@ -35,7 +35,6 @@ const ProfilePage = () => {
             dispatch(fetchGetUser())
         }
 
-
         dispatch(actionWS.socketConnect(`${wsUrlAuth}${accessToken}`));
         return () => { dispatch(actionWS.socketOnclose()) }
     }, [])
