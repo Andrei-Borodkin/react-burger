@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "../../services/redux/store";
 import { dataSelector, idSelector } from '../../services/redux/selectors/selectorsIngr';
 import { ordersSelectorWS } from '../../services/redux/selectors/selectorsWS';
 import { actionWS } from '../../services/redux/actionCreators/actionWS';
-import { wsUrl } from '../../utils/const-url';
+import { wsUrl, wsUrlAuth } from '../../utils/const-url';
 import { Tcounts, TmasIngr, Torders } from '../../utils/types';
+import { useLocation } from 'react-router-dom';
+import { getCookie } from '../../utils/func-cooke';
 
 type TFeddOrderDetailProps = {
     idProps?: string;
@@ -21,16 +23,24 @@ const FeddOrderDetail: FC<TFeddOrderDetailProps> = ({ bmodal = false, idProps })
     const justifyContent = bmodal ? 'space-around' : '';
 
     const dispatch = useDispatch()
+    const location = useLocation();
 
     const data = useSelector(dataSelector)
     const id = useSelector(idSelector)
     const orders = useSelector(ordersSelectorWS)
-
+    const patch = location.pathname.split('/')[1]
 
     useEffect(() => {
-        if (idProps) dispatch(actionWS.socketConnect(wsUrl));
+        if (idProps) {
+            if (patch === "feed") {
+                dispatch(actionWS.socketConnect(wsUrl));
+            }
+            if (patch === "profile"){
+                dispatch(actionWS.socketConnect(`${wsUrlAuth}${getCookie('accessToken')}`));
+            }
+        }
         return () => { if (idProps) dispatch(actionWS.socketOnclose()) }
-    }, [dispatch, idProps])
+    }, [dispatch, idProps, patch])
 
     const orderFind: Torders = orders.filter((item: Torders) => item._id === (id || idProps))[0]
 

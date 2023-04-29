@@ -1,7 +1,7 @@
 import { TactionOrder } from "../actionCreators/actionOrder";
 import { GET_ORDER_FAILED, SET_ORDER } from "../actionTypes/actionTypes";
 
-type TinitialState = {
+export type TinitialState = {
   order: string,
 }
 

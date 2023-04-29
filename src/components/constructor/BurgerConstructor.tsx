@@ -61,7 +61,7 @@ const BurgerConstructor = () => {
           <p className={ConstStyles.p}>{summIng}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+        <Button htmlType="button" type="primary" size="medium" onClick={openModal} data-cy="button-order">
           Оформить заказ
         </Button>
       </section>

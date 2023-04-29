@@ -3,7 +3,7 @@ import { TIngr } from "../../../utils/types";
 import { TactionIngr } from "../actionCreators/actionIngr";
 
 
-type TinitialState = {
+export type TinitialState = {
   data: ReadonlyArray<TIngr>,
   isShowInger: boolean,
   idtouch: string,

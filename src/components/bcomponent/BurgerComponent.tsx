@@ -42,7 +42,7 @@ const BurgerComponent = () => {
     return (
         <>
             {dataBun || ingr.length > 0 ?
-                <section className={burCompStyles.section} style={{ border, borderRadius }} ref={dropTarget}>
+                <section className={burCompStyles.section} style={{ border, borderRadius }} ref={dropTarget} data-cy="constr2">
 
                     <div className={`${burCompStyles.component} ml-4`}  >
                         {dataBun ?
@@ -97,7 +97,7 @@ const BurgerComponent = () => {
                     </div>
                 </section>
                 :
-                <section className={burCompStyles.section} style={{ border: '0.5px dashed #4c4cff', borderRadius: '40px' }} ref={dropTarget}>
+                <section className={burCompStyles.section} style={{ border: '0.5px dashed #4c4cff', borderRadius: '40px' }} ref={dropTarget} data-cy="constr">
                     <div className={`${burCompStyles.component} ml-4`}  >
                         <span className={`${burCompStyles.noingrall} text text_type_main-large`}>Перенесите <br /> ингридиенты <br /> для <br /> бургера </span>
                     </div>

@@ -38,7 +38,8 @@ export type TIngr = {
     price: number;
     image: string;
     image_mobile: string;
-    image_large: string
+    image_large: string;
+    __v?: string
 }
 
 export type TIngrBC = {

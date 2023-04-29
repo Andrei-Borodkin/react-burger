@@ -33,7 +33,7 @@ const Modal: FC<ModalProps> = ({ children, close }) => {
                 <div className={moduleStyles.card}>
 
                     <div className={moduleStyles.header}>
-                        <span onClick={close}> <CloseIcon type="primary" /></span>
+                        <span onClick={close} data-cy="close"> <CloseIcon type="primary" /></span>
                     </div>
                     <>{children}</>
                 </div>
